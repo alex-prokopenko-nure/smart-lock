@@ -16,13 +16,9 @@ namespace Domain.Contexts
         }
 
         public virtual DbSet<User> Users { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(DbConfiguration.DbConnectionString);
-
-            base.OnConfiguring(optionsBuilder);
-        }
+        public virtual DbSet<Lock> Locks { get; set; }
+        public virtual DbSet<LockOperation> LockOperations { get; set; }
+        public virtual DbSet<LockRent> LockRents { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

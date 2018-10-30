@@ -31,7 +31,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Lock");
+                    b.ToTable("Locks");
                 });
 
             modelBuilder.Entity("Domain.Models.LockOperation", b =>
@@ -50,7 +50,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("LockId");
 
-                    b.ToTable("LockOperation");
+                    b.ToTable("LockOperations");
                 });
 
             modelBuilder.Entity("Domain.Models.LockRent", b =>
@@ -67,7 +67,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("LockRent");
+                    b.ToTable("LockRents");
                 });
 
             modelBuilder.Entity("Domain.Models.User", b =>
