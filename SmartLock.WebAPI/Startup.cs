@@ -38,6 +38,7 @@ namespace SmartLock.WebAPI
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddScoped<ILocksService, LocksService>();
+            services.AddScoped<IUsersService, UsersService>();
 
             services.AddSwaggerGen(c =>
             {

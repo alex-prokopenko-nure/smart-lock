@@ -3,6 +3,7 @@ using Domain.Contexts;
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using SmartLock.WebAPI.Services.Interfaces;
+using SmartLock.WebAPI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,10 +26,38 @@ namespace SmartLock.WebAPI.Services
             return result;
         }
 
+        public async Task<IEnumerable<LockRent>> GetAllUsersLocks(int userId)
+        {
+            DateTime dateTimeNow = DateTime.Now;
+            var result = await _applicationDbContext.LockRents
+                .Where(x => x.UserId == userId && CheckTiming(x))
+                .Include(x => x.Lock)
+                .ToListAsync();
+
+            return result;
+        }
+
         public async Task<Lock> CreateLock()
         {
             Lock lockEntity = GenerateLock();
             await _applicationDbContext.Locks.AddAsync(lockEntity);
+            await _applicationDbContext.SaveChangesAsync();
+            List<User> admins = await _applicationDbContext.Users.Where(x => x.Role == ApplicationRole.Admin).ToListAsync();
+            List<LockRent> adminRents = new List<LockRent>();
+            foreach (var admin in admins)
+            {
+                LockRent lockRent = 
+                    new LockRent {
+                        LockId = lockEntity.Id,
+                        Lock = lockEntity,
+                        RentStart = DateTime.Now,
+                        Rights = RentRights.Admin,
+                        UserId = admin.Id,
+                        User = admin
+                    };
+                adminRents.Add(lockRent);
+            }
+            await _applicationDbContext.LockRents.AddRangeAsync(adminRents);
             await _applicationDbContext.SaveChangesAsync();
             return lockEntity;
         }
@@ -86,6 +115,76 @@ namespace SmartLock.WebAPI.Services
                 Locked = false
             };
             return entity;
+        }
+
+        public async Task<IEnumerable<LockOperation>> GetOperations(int lockId, int userId)
+        {
+            var currRent = await _applicationDbContext.LockRents
+                .FirstOrDefaultAsync(x => x.LockId == lockId && x.UserId == userId && x.Rights == RentRights.Renter && CheckTiming(x) && 
+                    x.RentStart == _applicationDbContext.LockRents
+                    .Where(z => z.UserId == userId)
+                    .Max(y => y.RentStart));
+            if (currRent == null)
+            {
+                return null;
+            }
+            return _applicationDbContext.LockOperations.Where(x => x.LockId == lockId && x.CreateTime >= currRent.RentStart && currRent.RentFinish.HasValue ? x.CreateTime <= currRent.RentFinish : true);
+        }
+
+        public async Task ShareRights(ShareRightsViewModel shareRightsViewModel)
+        {
+            LockRent ownerRent =
+                new LockRent
+                {
+                    UserId = shareRightsViewModel.OwnerId,
+                    LockId = shareRightsViewModel.LockId,
+                    Rights = shareRightsViewModel.Rights,
+                    RentStart = shareRightsViewModel.From,
+                    RentFinish = shareRightsViewModel.To
+                };
+            await _applicationDbContext.LockRents.AddAsync(ownerRent);
+            await _applicationDbContext.SaveChangesAsync();
+        }
+
+        public async Task<Lock> EditLock(int lockId, Lock lockModel)
+        {
+            var lockToEdit = await GetLock(lockId);
+            lockToEdit.Password = lockModel.Password;
+            _applicationDbContext.Locks.Update(lockToEdit);
+            await _applicationDbContext.SaveChangesAsync();
+            return lockToEdit;
+        }
+
+        public async Task DeleteLock(int lockId)
+        {
+            Lock lockToDelete = new Lock { Id = lockId };
+            _applicationDbContext.Attach(lockToDelete);
+            _applicationDbContext.Remove(lockToDelete);
+            await _applicationDbContext.SaveChangesAsync();
+        }
+
+        public async Task CancelRights(int lockId, int userId)
+        {
+            LockRent rent = await _applicationDbContext.LockRents
+                .FirstOrDefaultAsync(x => x.LockId == lockId && x.UserId == userId && CheckTiming(x));
+            _applicationDbContext.Remove(rent);
+        }
+
+        private bool CheckTiming(LockRent rent)
+        {
+            DateTime dateTimeNow = DateTime.Now;
+            return rent.RentStart <= dateTimeNow && (!rent.RentFinish.HasValue || rent.RentFinish > dateTimeNow);
+        }
+
+        public async Task<IEnumerable<User>> GetAllRenters(int lockId, RentRights rights)
+        {
+            var renters = await _applicationDbContext.LockRents
+                .Where(x => x.LockId == lockId && CheckTiming(x) && (int)x.Rights > (int)rights)
+                .Include(x => x.User)
+                .Select(x => x.User)
+                .ToListAsync();
+
+            return renters;
         }
     }
 }
