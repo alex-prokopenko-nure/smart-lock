@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Domain.Common.Configurations;
 using Domain.Contexts;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -13,6 +14,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using SmartLock.WebAPI.Models;
 using SmartLock.WebAPI.Services;
 using SmartLock.WebAPI.Services.Interfaces;
 using Swashbuckle.AspNetCore.Swagger;
@@ -32,7 +35,44 @@ namespace SmartLock.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             DbConfiguration.DbConnectionString = Configuration.GetConnectionString("LocalDb");
+
+            JwtSettings jwtSettings = new JwtSettings();
+            Configuration.Bind(nameof(JwtSettings), jwtSettings);
+
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(DbConfiguration.DbConnectionString));
+            services.AddSingleton<ITokenService, TokenService>(x => new TokenService(jwtSettings.ValidIssuer,
+                jwtSettings.ValidAudience, jwtSettings.IssuerSigningKey, jwtSettings.TokenLifeTime));
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        // will the lifetime be validated
+                        ValidateLifetime = jwtSettings.ValidateLifetime,
+
+                        // specifies whether the publisher will validate when validating the token
+                        ValidateIssuer = jwtSettings.ValidateIssuer,
+
+                        // a string representing the publisher
+                        ValidIssuer = jwtSettings.ValidIssuer,
+
+                        // setting the token consumer
+                        ValidAudience = jwtSettings.ValidAudience,
+
+                        // Will the token consumer be validated
+                        ValidateAudience = jwtSettings.ValidateAudience,
+
+                        // validate the security key
+                        ValidateIssuerSigningKey = jwtSettings.ValidateIssuerSigningKey,
+
+                        // set the security key
+                        IssuerSigningKey =
+                            new SymmetricSecurityKey(Convert.FromBase64String(jwtSettings.IssuerSigningKey))
+                    };
+                });
+
+            services.AddAuthorization();
 
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -68,7 +108,9 @@ namespace SmartLock.WebAPI
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials());
-            
+
+            app.UseAuthentication();
+
             app.UseMvc();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
