@@ -1,8 +1,10 @@
 ﻿using Domain.Common.Enums;
+using Domain.Common.Helpers;
 using Domain.Contexts;
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using SmartLock.WebAPI.Services.Interfaces;
+using SmartLock.WebAPI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +25,31 @@ namespace SmartLock.WebAPI.Services
         {
             var userToReturn = await _applicationDbContext.Users.FirstOrDefaultAsync(x => x.Id == userId);
             return userToReturn;
+        }
+
+        public async Task<int> LoginUser(LoginViewModel model)
+        {
+            var user = await _applicationDbContext.Users
+                .FirstOrDefaultAsync(x => x.Email == model.Email && 
+                    AccountHelper.GetPasswordHash(model.Password) == x.Password);
+            if (user == null)
+            {
+                throw new Exception();
+            }
+            return user.Id;
+        }
+
+        public async Task RegisterUser(RegisterViewModel model)
+        {
+            User user = new User
+            {
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Password = AccountHelper.GetPasswordHash(model.Password)
+            };
+            await _applicationDbContext.Users.AddAsync(user);
+            await _applicationDbContext.SaveChangesAsync();
         }
     }
 }
