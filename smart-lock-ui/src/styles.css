@@ -2,6 +2,81 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 body {
-    background-color: rgb(255, 255, 225);
     margin: 0;
+}
+
+mat-form-field.mat-form-field {
+    font-size: 26px;
+}
+
+button.mat-flat-button {
+    height: 52px;
+    width: 180px;
+    font-size: 26px;
+}
+
+.mat-flat-button.mat-primary {
+    background-color: rgb(141, 30, 30) !important;
+}
+
+.mat-form-field-infix {
+    border-top: none;
+}
+
+.mat-input-element {
+    caret-color: rgb(141, 30, 30) !important;
+}
+
+.mat-form-field.mat-focused
+.mat-form-field-label {
+    color: rgb(141, 30, 30) !important;
+}
+
+.mat-form-field.mat-focused
+.mat-form-field-ripple {
+    background-color: rgb(141, 30, 30) !important;
+}
+
+.container {
+    background-color: rgb(241, 241, 241);
+    text-align: center;
+
+    position: absolute;
+    left: 8rem;
+    right: 8rem;
+    top: 12rem;
+    bottom: 12rem;
+    margin:auto;
+
+    max-width: 50rem;
+    max-height: 30rem;
+
+    /*this to solve "the content will not be cut when the window is smaller than the content": */
+    overflow:auto;
+    border-radius: 1.5rem;
+    padding: 1.2rem;
+    border: 4px solid rgb(141, 30, 30);
+}
+
+.mat-form-field-wrapper{
+    width:320px !important;
+}
+
+.mat-snack-bar-container {
+    width: 440px !important;
+    height: 60px !important;
+    color: rgb(141, 30, 30);
+    background: rgb(229, 229, 229);
+}
+
+.mat-simple-snackbar-action {
+    color: rgb(32, 32, 32);
+}
+
+.mat-simple-snackbar {
+    font-size: 18px;
+}
+
+.mat-button-wrapper {
+    font-size: 18px;
 }

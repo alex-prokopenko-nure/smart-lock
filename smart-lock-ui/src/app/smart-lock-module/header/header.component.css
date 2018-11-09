@@ -18,14 +18,12 @@ a:active {
 }
 
 .lock {
-    margin-top: 5px;
     float: left;
-    width: 65%;
+    width: 40%;
     cursor: pointer;
 }
 
 .nav-bar {
-    width: 35%;
     float: right;
 }
 
@@ -36,8 +34,9 @@ a:active {
 }
 
 .icon {
-    height: 60px;
-    width: 60px;
+    padding-top:10px;
+    height: 50px;
+    width: 50px;
     float: left;
 }
 

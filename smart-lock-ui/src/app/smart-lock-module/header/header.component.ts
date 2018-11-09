@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/shared-module/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +13,9 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     iconRegistry: MatIconRegistry,
-    sanitizer: DomSanitizer
+    sanitizer: DomSanitizer,
+    private authService: AuthService,
+    private router: Router
     ) { 
       iconRegistry.addSvgIcon(
         "padlock",
@@ -22,4 +26,13 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
   }
 
+  isLoggedIn = () => this.authService.isLoggedIn()
+
+  logout = () => this.authService.logout()
+
+  navigateToHome = () => this.router.navigateByUrl("/smartlock/home");
+
+  navigateToLogin = () => this.router.navigateByUrl("/smartlock/login");
+
+  navigateToRegister = () => this.router.navigateByUrl("/smartlock/register");
 }

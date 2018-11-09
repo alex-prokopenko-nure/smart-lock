@@ -1,4 +1,13 @@
 <app-header></app-header>
-<p>
-  login works!
-</p>
+<div class="container">
+  <h2>Log in with your smartlock account</h2>
+  <form [formGroup]="loginForm">
+    <mat-form-field>
+      <input matInput class="input" color="warn" placeholder="E-mail" formControlName="email">
+    </mat-form-field><br/>
+    <mat-form-field>
+      <input matInput class="input" color="warn" type="password" placeholder="Password" formControlName="password">
+    </mat-form-field><br/>
+    <button mat-flat-button class="input" color="primary" (click)="login()">Login</button>
+  </form>
+</div>

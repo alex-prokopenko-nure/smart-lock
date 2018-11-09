@@ -1,4 +1,19 @@
-<app-header></app-header> 
-<p>
-  register works!
-</p>
+<app-header></app-header>
+<div class="container">
+  <h2>Create smartlock account to use smartlock system</h2>
+  <form [formGroup]="registerForm">
+    <mat-form-field>
+      <input matInput class="input" color="warn" placeholder="E-mail" formControlName="email">
+    </mat-form-field><br/>
+    <mat-form-field>
+      <input matInput class="input" color="warn" placeholder="First name" formControlName="firstName">
+    </mat-form-field><br/>
+    <mat-form-field>
+      <input matInput class="input" color="warn" placeholder="Last name" formControlName="lastName">
+    </mat-form-field><br/>
+    <mat-form-field>
+      <input matInput class="input" color="warn" type="password" placeholder="Password" formControlName="password">
+    </mat-form-field><br/>
+    <button mat-flat-button class="input" color="primary" (click)="register()">Register</button>
+  </form>
+</div>

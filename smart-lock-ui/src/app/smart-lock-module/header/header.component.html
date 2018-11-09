@@ -4,9 +4,9 @@
     <p class="name">SmartLock</p>
   </div>
   <div class="nav-bar">
-    <a>Home</a>
-    <a>Login</a>
-    <a>Register</a>
-    <a>Sign out</a>
+    <a *ngIf="isLoggedIn()" (click)="navigateToHome()">Home</a>
+    <a *ngIf="!isLoggedIn()" (click)="navigateToLogin()">Login</a>
+    <a *ngIf="!isLoggedIn()" (click)="navigateToRegister()">Register</a>
+    <a *ngIf="isLoggedIn()" (click)="logout()">Sign out</a>
   </div>
 </div>

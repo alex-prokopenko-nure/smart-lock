@@ -1,4 +1,12 @@
 <app-header></app-header>
-<p>
-  home works!
-</p>
+<div class="main-content">
+  <mat-spinner *ngIf="!isDownloaded"></mat-spinner>
+  <div *ngIf="isDownloaded">
+    <div *ngIf="user.role == UserRole._1" class="add-lock">
+      <button mat-flat-button class="input" color="primary" (click)="addLock()"><span class="biggy">+</span>New Lock</button>
+    </div>
+    <div *ngFor="let rent of lockRents">
+      {{rent.lock.Id}}
+    </div>
+  </div>
+</div>

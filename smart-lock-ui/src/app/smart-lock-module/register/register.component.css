@@ -1,0 +1,20 @@
+h2 {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 32px;
+}
+
+p {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 24px; 
+    color: red;
+}
+
+mat-form-field.mat-form-field {
+    font-size: 20px;
+}
+
+button.mat-flat-button {
+    height: 40px;
+    width: 140px;
+    font-size: 20px;
+}

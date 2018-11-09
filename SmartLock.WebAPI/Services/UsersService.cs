@@ -41,6 +41,11 @@ namespace SmartLock.WebAPI.Services
 
         public async Task RegisterUser(RegisterViewModel model)
         {
+            var duplicate = await _applicationDbContext.Users.FirstOrDefaultAsync(x => x.Email == model.Email);
+            if (duplicate != null)
+            {
+                throw new Exception();
+            }
             User user = new User
             {
                 Email = model.Email,

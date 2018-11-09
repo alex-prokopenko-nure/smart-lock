@@ -44,12 +44,14 @@ import {
   MatTableModule
 } from '@angular/material';
 import { HeaderComponent } from './header/header.component';
+import { LocksService } from './services/locks.service';
 
 @NgModule({
   declarations: [
     LoginComponent, 
     RegisterComponent, 
-    HomeComponent, HeaderComponent
+    HomeComponent, 
+    HeaderComponent
   ],
   imports: [
     CommonModule,
@@ -93,6 +95,9 @@ import { HeaderComponent } from './header/header.component';
     MatTooltipModule,
     MatTreeModule,
     MatProgressSpinnerModule,
+  ],
+  providers: [
+    LocksService
   ]
 })
 export class SmartLockModule { }

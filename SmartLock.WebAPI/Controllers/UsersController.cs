@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SmartLock.WebAPI.Services.Interfaces;
@@ -40,8 +41,29 @@ namespace SmartLock.WebAPI.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            await _usersService.RegisterUser(model);
-            return Ok();
+            try
+            {
+                await _usersService.RegisterUser(model);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost("{userId}/info")]
+        public async Task<ActionResult<User>> GetUserInfo(int userId)
+        {
+            try
+            {
+                var user = await _usersService.GetUser(userId);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return NotFound();
+            }
         }
     }
 }

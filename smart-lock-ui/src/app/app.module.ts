@@ -5,7 +5,11 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared-module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { AuthService } from './shared-module/services/auth.service';
+import { AuthGuardService } from './smart-lock-module/guards/auth.guard';
+import { UnauthGuardService } from './smart-lock-module/guards/unauth.guard';
 
 @NgModule({
   declarations: [
@@ -18,7 +22,16 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+    AuthService,
+    AuthGuardService,
+    UnauthGuardService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
