@@ -14,7 +14,7 @@ export class AuthService {
     private smartLockApiService: SmartLockApiService,
     private router: Router
     ) { 
-      if (this.isLoggedIn) {
+      if (this.isLoggedIn()) {
         this.getInfo();
       }
     }

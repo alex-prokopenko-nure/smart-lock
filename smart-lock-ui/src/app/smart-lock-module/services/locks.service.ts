@@ -8,4 +8,8 @@ export class LocksService {
   getUserRents = (userId: number) => {
     return this.smartLockApiService.apiLocksAllLocksByUserIdGet(userId);
   }
+
+  addLock = () => {
+    return this.smartLockApiService.apiLocksPost();
+  }
 }

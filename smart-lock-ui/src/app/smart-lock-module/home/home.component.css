@@ -3,12 +3,36 @@
     border: 10px solid rgb(141, 30, 30);
     background-color: rgb(241, 241, 241);
     overflow-y: auto;
+    text-align: center;
+}
+
+.mat-flat-button.mat-primary {
+    background-color: rgb(5, 128, 15) !important;
 }
 
 .biggy {
-    width: 60px;
-    height:30px;
-    border: 1px solid white;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    padding-left: 7.5px;
+    padding-right: 7.5px;
+    border: 3px solid white;
     border-radius: 50%;
     font-size: 30px;
+    margin-right: 20px;
+}
+
+.input {
+    margin-top: 20px;
+}
+
+.lock {
+    background-color: rgb(5, 128, 15);
+    display: flex;
+    width: 16rem;
+    height: 4rem;
+    border-radius: 0.5rem;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    margin-left: 12rem;
 }

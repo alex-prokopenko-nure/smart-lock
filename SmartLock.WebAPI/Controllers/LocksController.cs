@@ -55,10 +55,10 @@ namespace SmartLock.WebAPI.Controllers
 
         #region Post
         [HttpPost]
-        public async Task<ActionResult<Lock>> CreateLock()
+        public async Task<IActionResult> CreateLock()
         {
-            var result = await _locksService.CreateLock();
-            return Ok(result);
+            await _locksService.CreateLock();
+            return Ok();
         }
 
         [HttpPost("{lockId}/opened")]

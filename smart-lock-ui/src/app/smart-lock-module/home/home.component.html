@@ -5,8 +5,16 @@
     <div *ngIf="user.role == UserRole._1" class="add-lock">
       <button mat-flat-button class="input" color="primary" (click)="addLock()"><span class="biggy">+</span>New Lock</button>
     </div>
-    <div *ngFor="let rent of lockRents">
-      {{rent.lock.Id}}
+    <div class="lock" *ngFor="let rent of lockRents">
+      <div>
+        Id: {{ rent.lock.id }}
+      </div>
+      <div>
+        {{ rent.lock.locked }}
+      </div>
+      <div>
+        Actions
+      </div>
     </div>
   </div>
 </div>

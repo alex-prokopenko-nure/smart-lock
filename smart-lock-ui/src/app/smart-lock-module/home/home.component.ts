@@ -25,9 +25,12 @@ export class HomeComponent implements OnInit {
     authService.getUserInfo().subscribe(result => {
       this.user = result;
       this.fullName = result.firstName + " " + result.lastName;
+      setTimeout(x => snackBar.open("Hello, " + this.fullName, "Greetings", {duration: 3000}), 1000);
     });
-    locksService.getUserRents(this.userId).subscribe(result => {
+    this.locksService.getUserRents(this.userId).subscribe(result => {
       this.lockRents = result;
+      this.isDownloaded = true;
+    }, error => {
       this.isDownloaded = true;
     });
   }
@@ -39,4 +42,17 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
+  addLock = () => {
+    this.locksService.addLock().subscribe(
+      result => {
+        this.locksService.getUserRents(this.userId).subscribe(result => {
+          this.lockRents = result;
+          this.isDownloaded = true;
+        });
+      },
+      error => {
+        this.snackBar.open("Lock addition failed", "Error", {duration: 5000});
+      }
+    );
+  }
 }

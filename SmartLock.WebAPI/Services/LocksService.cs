@@ -34,10 +34,15 @@ namespace SmartLock.WebAPI.Services
                 .Include(x => x.Lock)
                 .ToListAsync();
 
+            foreach(var res in result)
+            {
+                res.Lock.LockRents = null;
+            }
+
             return result;
         }
 
-        public async Task<Lock> CreateLock()
+        public async Task CreateLock()
         {
             Lock lockEntity = GenerateLock();
             await _applicationDbContext.Locks.AddAsync(lockEntity);
@@ -59,7 +64,6 @@ namespace SmartLock.WebAPI.Services
             }
             await _applicationDbContext.LockRents.AddRangeAsync(adminRents);
             await _applicationDbContext.SaveChangesAsync();
-            return lockEntity;
         }
 
         public async Task LockClosed(int id)
