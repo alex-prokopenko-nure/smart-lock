@@ -45,13 +45,17 @@ import {
 } from '@angular/material';
 import { HeaderComponent } from './header/header.component';
 import { LocksService } from './services/locks.service';
+import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
+import { OperationsComponent } from './operations/operations.component';
 
 @NgModule({
   declarations: [
     LoginComponent, 
     RegisterComponent, 
     HomeComponent, 
-    HeaderComponent
+    HeaderComponent,
+    DeleteDialogComponent,
+    OperationsComponent
   ],
   imports: [
     CommonModule,
@@ -98,6 +102,10 @@ import { LocksService } from './services/locks.service';
   ],
   providers: [
     LocksService
+  ],
+  entryComponents: [
+    DeleteDialogComponent,
+    OperationsComponent
   ]
 })
 export class SmartLockModule { }

@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared-module/services/auth.service';
-import { MatSnackBar } from '@angular/material';
-import { LockRent, User, UserRole } from 'src/app/shared-module';
+import { MatSnackBar, MatDialog } from '@angular/material';
+import { LockRent, User, UserRole, SmartLockApiService } from 'src/app/shared-module';
 import { LocksService } from '../services/locks.service';
+import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
+import { ActionStatus } from '../enums/action-status.enum';
+import { OperationsComponent } from '../operations/operations.component';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +22,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private locksService: LocksService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) { 
     this.userId = authService.currentUserId;
     authService.getUserInfo().subscribe(result => {
@@ -54,5 +58,28 @@ export class HomeComponent implements OnInit {
         this.snackBar.open("Lock addition failed", "Error", {duration: 5000});
       }
     );
+  }
+
+  deleteLock = (lockId: number) => {
+    const dialogRef = this.dialog.open(DeleteDialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == ActionStatus.Success) {
+        this.locksService.deleteLock(lockId).subscribe(
+          result => {
+            this.locksService.getUserRents(this.userId).subscribe(
+              result => {
+                this.lockRents = result
+              }
+            );
+          }
+        );
+      }
+    });
+  }
+
+  showOperations = (lockId: number) => {
+    const dialogRef = this.dialog.open(OperationsComponent, {
+      data: {userId: this.userId, lockId: lockId}
+    });
   }
 }

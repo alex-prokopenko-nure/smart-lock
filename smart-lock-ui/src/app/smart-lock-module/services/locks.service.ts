@@ -12,4 +12,12 @@ export class LocksService {
   addLock = () => {
     return this.smartLockApiService.apiLocksPost();
   }
+
+  deleteLock = (lockId: number) => {
+    return this.smartLockApiService.apiLocksByLockIdDelete(lockId);
+  }
+
+  getOperations = (lockId: number, userId: number) => {
+    return this.smartLockApiService.apiLocksByLockIdOperationsGet(lockId, userId);
+  }
 }

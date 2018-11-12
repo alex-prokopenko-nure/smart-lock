@@ -1,0 +1,19 @@
+.wrapper {
+    text-align: center;
+}
+
+.mat-raised-button {
+    background-color: rgb(8, 233, 0) !important;
+    margin-right: 5px;
+    width: 100px;
+}
+
+.mat-raised-button.mat-warn {
+    background-color: rgb(218, 4, 4) !important;
+    margin-left: 5px;
+    width: 100px;
+}
+
+h3 {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
+}

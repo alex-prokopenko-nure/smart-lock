@@ -16,7 +16,7 @@ button.mat-flat-button {
 }
 
 .mat-flat-button.mat-primary {
-    background-color: rgb(141, 30, 30) !important;
+    background-color: rgb(26, 26, 26) !important;
 }
 
 .mat-form-field-infix {
@@ -24,17 +24,17 @@ button.mat-flat-button {
 }
 
 .mat-input-element {
-    caret-color: rgb(141, 30, 30) !important;
+    caret-color: rgb(26, 26, 26) !important;
 }
 
 .mat-form-field.mat-focused
 .mat-form-field-label {
-    color: rgb(141, 30, 30) !important;
+    color: rgb(26, 26, 26) !important;
 }
 
 .mat-form-field.mat-focused
 .mat-form-field-ripple {
-    background-color: rgb(141, 30, 30) !important;
+    background-color: rgb(26, 26, 26) !important;
 }
 
 .container {
@@ -55,7 +55,7 @@ button.mat-flat-button {
     overflow:auto;
     border-radius: 1.5rem;
     padding: 1.2rem;
-    border: 4px solid rgb(141, 30, 30);
+    border: 4px solid rgb(26, 26, 26);
 }
 
 .mat-form-field-wrapper{

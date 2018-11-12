@@ -124,15 +124,15 @@ namespace SmartLock.WebAPI.Services
         public async Task<IEnumerable<LockOperation>> GetOperations(int lockId, int userId)
         {
             var currRent = await _applicationDbContext.LockRents
-                .FirstOrDefaultAsync(x => x.LockId == lockId && x.UserId == userId && x.Rights == RentRights.Renter && CheckTiming(x) && 
+                .FirstOrDefaultAsync(x => x.LockId == lockId && x.UserId == userId && CheckTiming(x) && 
                     x.RentStart == _applicationDbContext.LockRents
-                    .Where(z => z.UserId == userId)
+                    .Where(z => z.UserId == userId && z.LockId == lockId)
                     .Max(y => y.RentStart));
             if (currRent == null)
             {
                 return null;
             }
-            return _applicationDbContext.LockOperations.Where(x => x.LockId == lockId && x.CreateTime >= currRent.RentStart && currRent.RentFinish.HasValue ? x.CreateTime <= currRent.RentFinish : true);
+            return _applicationDbContext.LockOperations.Where(x => x.LockId == lockId && x.CreateTime >= currRent.RentStart && currRent.RentFinish.HasValue ? x.CreateTime <= currRent.RentFinish : true).OrderByDescending(x => x.CreateTime);
         }
 
         public async Task ShareRights(ShareRightsViewModel shareRightsViewModel)
