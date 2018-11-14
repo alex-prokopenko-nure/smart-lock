@@ -12,7 +12,7 @@ namespace SmartLock.WebAPI.Services.Interfaces
     {
         Task<Lock> GetLock(int id);
         Task<IEnumerable<LockRent>> GetAllUsersLocks(int userId);
-        Task<IEnumerable<User>> GetAllRenters(int lockId, RentRights rights);
+        Task<IEnumerable<LockRent>> GetAllRenters(int lockId, RentRights rights);
         Task CreateLock();
         Task LockClosed(int id);
         Task LockOpened(int id);

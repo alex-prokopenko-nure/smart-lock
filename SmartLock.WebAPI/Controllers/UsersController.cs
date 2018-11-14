@@ -23,6 +23,13 @@ namespace SmartLock.WebAPI.Controllers
             _tokenService = tokenService;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
+        {
+            var result = await _usersService.GetAllUsers();
+            return Ok(result);
+        }
+
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(LoginViewModel model)
         {

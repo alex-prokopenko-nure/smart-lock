@@ -39,7 +39,7 @@ namespace SmartLock.WebAPI.Controllers
         }
 
         [HttpGet("{lockId}/renters")]
-        public async Task<ActionResult<IEnumerable<User>>> GetAllRenters(int lockId, RentRights rights)
+        public async Task<ActionResult<IEnumerable<LockRent>>> GetAllRenters(int lockId, RentRights rights)
         {
             var result = await _locksService.GetAllRenters(lockId, rights);
             return Ok(result);

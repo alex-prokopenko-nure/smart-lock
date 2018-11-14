@@ -26,7 +26,8 @@ export class RegisterComponent implements OnInit {
       email: ["", Validators.compose([Validators.required, Validators.email])],
       password: ["", Validators.compose([Validators.required, Validators.minLength(6)])],
       firstName: ["", Validators.required],
-      lastName: ["", Validators.required]     
+      lastName: ["", Validators.required],
+      username: ["", Validators.required]     
     });
   }
 
@@ -40,6 +41,7 @@ export class RegisterComponent implements OnInit {
       this.registerViewModel.password = this.registerForm.value.password;
       this.registerViewModel.firstName = this.registerForm.value.firstName;
       this.registerViewModel.lastName = this.registerForm.value.lastName;
+      this.registerViewModel.username = this.registerForm.value.username;
       let status: ActionStatus = await this.authService.register(this.registerViewModel);
       if (status == ActionStatus.Success) {
         this.router.navigateByUrl("smartlock/login?registered=1");

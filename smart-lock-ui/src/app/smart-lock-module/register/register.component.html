@@ -1,9 +1,12 @@
 <app-header></app-header>
 <div class="container">
-  <h2>Create smartlock account to use smartlock system</h2>
+  <h2>Create account to use smartlock system</h2>
   <form [formGroup]="registerForm">
     <mat-form-field>
       <input matInput class="input" color="warn" placeholder="E-mail" formControlName="email">
+    </mat-form-field><br/>
+    <mat-form-field>
+      <input matInput class="input" color="warn" placeholder="Username" formControlName="username">
     </mat-form-field><br/>
     <mat-form-field>
       <input matInput class="input" color="warn" placeholder="First name" formControlName="firstName">

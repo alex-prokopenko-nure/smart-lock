@@ -1,0 +1,31 @@
+<table mat-table [dataSource]="tableSource" class="mat-elevation-z8">
+  <ng-container matColumnDef="Name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let element"> {{ getName(element) }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Timing">
+    <th mat-header-cell *matHeaderCellDef> Timing </th>
+    <td mat-cell *matCellDef="let element"> {{ element.rentStart | date: "long" }} - {{ element.rentFinish | date: "long" }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="Rights">
+    <th mat-header-cell *matHeaderCellDef> Rights </th>
+    <td mat-cell *matCellDef="let element"> {{ element.createTime | date: "long" }} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<div class="rights-addition" *ngIf="rights == LockRentRights._1 || rights == LockRentRights._2">
+  <form [formGroup]="shareRightsForm">
+    <select formControlName="rights">
+      <option *ngIf="rights == LockRentRights._1" value="{{LockRentRights._2}}">Owner</option>
+      <option value="{{LockRentRights._3}}">Renter</option>
+    </select>
+    <select formControlName="userId">
+      <option *ngFor="let user of users" value="{{user.id}}">{{user.username}}</option>
+    </select>
+    <button mat-raised-button>Share rights</button>
+  </form>
+</div>

@@ -1,0 +1,17 @@
+.rights-addition {
+    text-align: center;
+}
+
+table {
+    width: 600px;
+}
+
+select {
+    display: inline-block;
+    margin: 10px;
+    font-size: 20px;
+}
+
+button {
+    margin: 10px;
+}

@@ -180,13 +180,17 @@ namespace SmartLock.WebAPI.Services
             return rent.RentStart <= dateTimeNow && (!rent.RentFinish.HasValue || rent.RentFinish > dateTimeNow);
         }
 
-        public async Task<IEnumerable<User>> GetAllRenters(int lockId, RentRights rights)
+        public async Task<IEnumerable<LockRent>> GetAllRenters(int lockId, RentRights rights)
         {
             var renters = await _applicationDbContext.LockRents
                 .Where(x => x.LockId == lockId && CheckTiming(x) && (int)x.Rights > (int)rights)
                 .Include(x => x.User)
-                .Select(x => x.User)
                 .ToListAsync();
+
+            foreach (var rent in renters)
+            {
+                rent.User.LockRents = null;
+            }
 
             return renters;
         }

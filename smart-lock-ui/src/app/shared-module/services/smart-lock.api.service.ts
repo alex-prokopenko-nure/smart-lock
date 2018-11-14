@@ -140,7 +140,7 @@ export class SmartLockApiService {
      * @param rights (optional) 
      * @return Success
      */
-    apiLocksByLockIdRentersGet(lockId: number, rights: Rights | null | undefined): Observable<User[]> {
+    apiLocksByLockIdRentersGet(lockId: number, rights: LockRentRights | null | undefined): Observable<LockRent[]> {
         let url_ = this.baseUrl + "/api/Locks/{lockId}/renters?";
         if (lockId === undefined || lockId === null)
             throw new Error("The parameter 'lockId' must be defined.");
@@ -164,14 +164,14 @@ export class SmartLockApiService {
                 try {
                     return this.processApiLocksByLockIdRentersGet(<any>response_);
                 } catch (e) {
-                    return <Observable<User[]>><any>_observableThrow(e);
+                    return <Observable<LockRent[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<User[]>><any>_observableThrow(response_);
+                return <Observable<LockRent[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processApiLocksByLockIdRentersGet(response: HttpResponseBase): Observable<User[]> {
+    protected processApiLocksByLockIdRentersGet(response: HttpResponseBase): Observable<LockRent[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -185,7 +185,7 @@ export class SmartLockApiService {
             if (resultData200 && resultData200.constructor === Array) {
                 result200 = [];
                 for (let item of resultData200)
-                    result200.push(User.fromJS(item));
+                    result200.push(LockRent.fromJS(item));
             }
             return _observableOf(result200);
             }));
@@ -194,7 +194,7 @@ export class SmartLockApiService {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<User[]>(<any>null);
+        return _observableOf<LockRent[]>(<any>null);
     }
 
     /**
@@ -261,7 +261,7 @@ export class SmartLockApiService {
     /**
      * @return Success
      */
-    apiLocksPost(): Observable<Lock> {
+    apiLocksPost(): Observable<void> {
         let url_ = this.baseUrl + "/api/Locks";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -269,7 +269,6 @@ export class SmartLockApiService {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "application/json"
             })
         };
 
@@ -280,14 +279,14 @@ export class SmartLockApiService {
                 try {
                     return this.processApiLocksPost(<any>response_);
                 } catch (e) {
-                    return <Observable<Lock>><any>_observableThrow(e);
+                    return <Observable<void>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<Lock>><any>_observableThrow(response_);
+                return <Observable<void>><any>_observableThrow(response_);
         }));
     }
 
-    protected processApiLocksPost(response: HttpResponseBase): Observable<Lock> {
+    protected processApiLocksPost(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -296,17 +295,14 @@ export class SmartLockApiService {
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? Lock.fromJS(resultData200) : new Lock();
-            return _observableOf(result200);
+            return _observableOf<void>(<any>null);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<Lock>(<any>null);
+        return _observableOf<void>(<any>null);
     }
 
     /**
@@ -670,6 +666,61 @@ export class SmartLockApiService {
     }
 
     /**
+     * @return Success
+     */
+    apiUsersGet(): Observable<User[]> {
+        let url_ = this.baseUrl + "/api/Users";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processApiUsersGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processApiUsersGet(<any>response_);
+                } catch (e) {
+                    return <Observable<User[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<User[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processApiUsersGet(response: HttpResponseBase): Observable<User[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(User.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<User[]>(<any>null);
+    }
+
+    /**
      * @param model (optional) 
      * @return Success
      */
@@ -1016,6 +1067,7 @@ export class User implements IUser {
     id?: number | undefined;
     firstName?: string | undefined;
     lastName?: string | undefined;
+    username?: string | undefined;
     email?: string | undefined;
     password?: string | undefined;
     role?: UserRole | undefined;
@@ -1035,6 +1087,7 @@ export class User implements IUser {
             this.id = data["id"];
             this.firstName = data["firstName"];
             this.lastName = data["lastName"];
+            this.username = data["username"];
             this.email = data["email"];
             this.password = data["password"];
             this.role = data["role"];
@@ -1058,6 +1111,7 @@ export class User implements IUser {
         data["id"] = this.id;
         data["firstName"] = this.firstName;
         data["lastName"] = this.lastName;
+        data["username"] = this.username;
         data["email"] = this.email;
         data["password"] = this.password;
         data["role"] = this.role;
@@ -1074,6 +1128,7 @@ export interface IUser {
     id?: number | undefined;
     firstName?: string | undefined;
     lastName?: string | undefined;
+    username?: string | undefined;
     email?: string | undefined;
     password?: string | undefined;
     role?: UserRole | undefined;
@@ -1180,6 +1235,7 @@ export class RegisterViewModel implements IRegisterViewModel {
     email?: string | undefined;
     firstName?: string | undefined;
     lastName?: string | undefined;
+    username?: string | undefined;
     password?: string | undefined;
 
     constructor(data?: IRegisterViewModel) {
@@ -1196,6 +1252,7 @@ export class RegisterViewModel implements IRegisterViewModel {
             this.email = data["email"];
             this.firstName = data["firstName"];
             this.lastName = data["lastName"];
+            this.username = data["username"];
             this.password = data["password"];
         }
     }
@@ -1212,6 +1269,7 @@ export class RegisterViewModel implements IRegisterViewModel {
         data["email"] = this.email;
         data["firstName"] = this.firstName;
         data["lastName"] = this.lastName;
+        data["username"] = this.username;
         data["password"] = this.password;
         return data; 
     }
@@ -1221,13 +1279,8 @@ export interface IRegisterViewModel {
     email?: string | undefined;
     firstName?: string | undefined;
     lastName?: string | undefined;
+    username?: string | undefined;
     password?: string | undefined;
-}
-
-export enum Rights {
-    _1 = 1, 
-    _2 = 2, 
-    _3 = 3, 
 }
 
 export enum LockOperationState {

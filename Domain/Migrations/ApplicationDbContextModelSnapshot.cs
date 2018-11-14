@@ -91,6 +91,8 @@ namespace Domain.Migrations
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(2);
 
+                    b.Property<string>("Username");
+
                     b.HasKey("Id");
 
                     b.ToTable("Users");

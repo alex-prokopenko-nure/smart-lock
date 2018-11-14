@@ -21,6 +21,11 @@ namespace SmartLock.WebAPI.Services
             _applicationDbContext = applicationDbContext;
         }
 
+        public async Task<IEnumerable<User>> GetAllUsers()
+        {
+            return await _applicationDbContext.Users.ToListAsync();
+        }
+
         public async Task<User> GetUser(int userId)
         {
             var userToReturn = await _applicationDbContext.Users.FirstOrDefaultAsync(x => x.Id == userId);
@@ -41,7 +46,7 @@ namespace SmartLock.WebAPI.Services
 
         public async Task RegisterUser(RegisterViewModel model)
         {
-            var duplicate = await _applicationDbContext.Users.FirstOrDefaultAsync(x => x.Email == model.Email);
+            var duplicate = await _applicationDbContext.Users.FirstOrDefaultAsync(x => x.Email == model.Email || x.Username == model.Username);
             if (duplicate != null)
             {
                 throw new Exception();

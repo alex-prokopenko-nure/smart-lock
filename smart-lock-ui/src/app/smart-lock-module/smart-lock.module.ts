@@ -47,6 +47,8 @@ import { HeaderComponent } from './header/header.component';
 import { LocksService } from './services/locks.service';
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 import { OperationsComponent } from './operations/operations.component';
+import { RentersComponent } from './renters/renters.component';
+import { UsersService } from './services/users.service';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,8 @@ import { OperationsComponent } from './operations/operations.component';
     HomeComponent, 
     HeaderComponent,
     DeleteDialogComponent,
-    OperationsComponent
+    OperationsComponent,
+    RentersComponent
   ],
   imports: [
     CommonModule,
@@ -101,11 +104,13 @@ import { OperationsComponent } from './operations/operations.component';
     MatProgressSpinnerModule,
   ],
   providers: [
-    LocksService
+    LocksService,
+    UsersService
   ],
   entryComponents: [
     DeleteDialogComponent,
-    OperationsComponent
+    OperationsComponent,
+    RentersComponent
   ]
 })
 export class SmartLockModule { }

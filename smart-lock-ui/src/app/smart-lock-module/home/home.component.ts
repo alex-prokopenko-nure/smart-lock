@@ -6,6 +6,7 @@ import { LocksService } from '../services/locks.service';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { ActionStatus } from '../enums/action-status.enum';
 import { OperationsComponent } from '../operations/operations.component';
+import { RentersComponent } from '../renters/renters.component';
 
 @Component({
   selector: 'app-home',
@@ -80,6 +81,12 @@ export class HomeComponent implements OnInit {
   showOperations = (lockId: number) => {
     const dialogRef = this.dialog.open(OperationsComponent, {
       data: {userId: this.userId, lockId: lockId}
+    });
+  }
+
+  showRenters = (lockRent: LockRent) => {
+    const dialogRef = this.dialog.open(RentersComponent, {
+      data: {rights: lockRent.rights, lockId: lockRent.lockId}
     });
   }
 }
