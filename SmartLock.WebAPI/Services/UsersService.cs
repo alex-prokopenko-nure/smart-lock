@@ -54,6 +54,7 @@ namespace SmartLock.WebAPI.Services
             User user = new User
             {
                 Email = model.Email,
+                Username = model.Username,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Password = AccountHelper.GetPasswordHash(model.Password)

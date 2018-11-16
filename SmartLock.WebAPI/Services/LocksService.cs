@@ -132,7 +132,8 @@ namespace SmartLock.WebAPI.Services
             {
                 return null;
             }
-            return _applicationDbContext.LockOperations.Where(x => x.LockId == lockId && x.CreateTime >= currRent.RentStart && currRent.RentFinish.HasValue ? x.CreateTime <= currRent.RentFinish : true).OrderByDescending(x => x.CreateTime);
+            var lockOperations = _applicationDbContext.LockOperations.Where(x => x.LockId == lockId);
+            return lockOperations.Where(x => x.CreateTime >= currRent.RentStart && (!currRent.RentFinish.HasValue || x.CreateTime <= currRent.RentFinish)).OrderByDescending(x => x.CreateTime);
         }
 
         public async Task ShareRights(ShareRightsViewModel shareRightsViewModel)
@@ -171,7 +172,9 @@ namespace SmartLock.WebAPI.Services
         {
             LockRent rent = await _applicationDbContext.LockRents
                 .FirstOrDefaultAsync(x => x.LockId == lockId && x.UserId == userId && CheckTiming(x));
-            _applicationDbContext.Remove(rent);
+            rent.RentFinish = DateTime.Now;
+            _applicationDbContext.LockRents.Update(rent);
+            await _applicationDbContext.SaveChangesAsync();
         }
 
         private bool CheckTiming(LockRent rent)

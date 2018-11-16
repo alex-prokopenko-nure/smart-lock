@@ -12,7 +12,7 @@ mat-form-field.mat-form-field {
 button.mat-flat-button {
     height: 52px;
     width: 180px;
-    font-size: 26px;
+    font-size: 18px;
 }
 
 .mat-flat-button.mat-primary {
@@ -59,7 +59,7 @@ button.mat-flat-button {
 }
 
 .mat-form-field-wrapper{
-    width:320px !important;
+    width:260px;
 }
 
 .mat-snack-bar-container {
@@ -74,9 +74,5 @@ button.mat-flat-button {
 }
 
 .mat-simple-snackbar {
-    font-size: 18px;
-}
-
-.mat-button-wrapper {
     font-size: 18px;
 }

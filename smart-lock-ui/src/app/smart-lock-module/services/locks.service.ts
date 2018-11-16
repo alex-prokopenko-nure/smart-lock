@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SmartLockApiService, LockRentRights } from 'src/app/shared-module';
+import { SmartLockApiService, LockRentRights, ShareRightsViewModel, ShareRightsViewModelRights } from 'src/app/shared-module';
 
 @Injectable()
 export class LocksService {
@@ -23,5 +23,13 @@ export class LocksService {
 
   getRenters = (lockId: number, rights: LockRentRights) => {
     return this.smartLockApiService.apiLocksByLockIdRentersGet(lockId, rights);
+  }
+
+  shareRights = (model: ShareRightsViewModel) => {
+    return this.smartLockApiService.apiLocksShareRightsPost(model);
+  }
+
+  cancelRent = (lockId: number, userId: number) => {
+    return this.smartLockApiService.apiLocksByLockIdCancelByUserIdDelete(lockId, userId);
   }
 }

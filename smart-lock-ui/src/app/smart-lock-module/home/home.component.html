@@ -15,7 +15,7 @@
         </div>
         <div class="actions">
           <button mat-raised-button (click)="showOperations(rent.lock.id)">Show operations</button>
-          <button mat-raised-button (click)="showRenters(rent)" *ngIf="user.role == UserRole._1 || user.role == UserRole._2">Show renters</button>
+          <button mat-raised-button (click)="showRenters(rent)" *ngIf="rent.rights == LockRentRights._1 || rent.rights == LockRentRights._2">Show renters</button>
           <button mat-raised-button color="warn" *ngIf="user.role == UserRole._1" (click)="deleteLock(rent.lock.id)">Delete</button>
         </div>
       </div>

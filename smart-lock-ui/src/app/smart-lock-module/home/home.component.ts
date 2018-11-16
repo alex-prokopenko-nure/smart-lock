@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared-module/services/auth.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
-import { LockRent, User, UserRole, SmartLockApiService } from 'src/app/shared-module';
+import { LockRent, User, UserRole, SmartLockApiService, LockRentRights } from 'src/app/shared-module';
 import { LocksService } from '../services/locks.service';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { ActionStatus } from '../enums/action-status.enum';
@@ -42,6 +42,10 @@ export class HomeComponent implements OnInit {
 
   get UserRole() {
     return UserRole;
+  }
+
+  get LockRentRights() {
+    return LockRentRights;
   }
 
   ngOnInit() {
@@ -86,7 +90,7 @@ export class HomeComponent implements OnInit {
 
   showRenters = (lockRent: LockRent) => {
     const dialogRef = this.dialog.open(RentersComponent, {
-      data: {rights: lockRent.rights, lockId: lockRent.lockId}
+      data: {rights: lockRent.rights, lockId: lockRent.lockId, userId: this.userId}
     });
   }
 }
