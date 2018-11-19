@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using SmartLock.WebAPI.Hubs;
 using SmartLock.WebAPI.Models;
 using SmartLock.WebAPI.Services;
 using SmartLock.WebAPI.Services.Interfaces;
@@ -79,6 +80,7 @@ namespace SmartLock.WebAPI
 
             services.AddScoped<ILocksService, LocksService>();
             services.AddScoped<IUsersService, UsersService>();
+            services.AddSignalR();
 
             services.AddSwaggerGen(c =>
             {
@@ -109,6 +111,10 @@ namespace SmartLock.WebAPI
                 .AllowAnyHeader()
                 .AllowCredentials());
 
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<LockHub>("/Locks");
+            });
             app.UseAuthentication();
 
             app.UseMvc();

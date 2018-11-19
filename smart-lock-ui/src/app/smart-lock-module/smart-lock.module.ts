@@ -49,6 +49,8 @@ import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 import { OperationsComponent } from './operations/operations.component';
 import { RentersComponent } from './renters/renters.component';
 import { UsersService } from './services/users.service';
+import { InfoEditComponent } from './info-edit/info-edit.component';
+import { WebsocketService } from './services/websocket.service';
 
 @NgModule({
   declarations: [
@@ -58,7 +60,8 @@ import { UsersService } from './services/users.service';
     HeaderComponent,
     DeleteDialogComponent,
     OperationsComponent,
-    RentersComponent
+    RentersComponent,
+    InfoEditComponent
   ],
   imports: [
     CommonModule,
@@ -105,12 +108,14 @@ import { UsersService } from './services/users.service';
   ],
   providers: [
     LocksService,
-    UsersService
+    UsersService,
+    WebsocketService
   ],
   entryComponents: [
     DeleteDialogComponent,
     OperationsComponent,
-    RentersComponent
+    RentersComponent,
+    InfoEditComponent
   ]
 })
 export class SmartLockModule { }

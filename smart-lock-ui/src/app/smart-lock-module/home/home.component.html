@@ -13,9 +13,13 @@
         <div class="section locked" [ngClass]="{'opened' : !rent.lock.locked}">
           {{ rent.lock.locked ? "Locked" : "Opened" }}
         </div>
+        <div class="section info">
+          {{ rent.lock.info }}
+        </div>
         <div class="actions">
           <button mat-raised-button (click)="showOperations(rent.lock.id)">Show operations</button>
           <button mat-raised-button (click)="showRenters(rent)" *ngIf="rent.rights == LockRentRights._1 || rent.rights == LockRentRights._2">Show renters</button>
+          <button mat-raised-button (click)="editInfo(rent.lock)" *ngIf="rent.rights == LockRentRights._1 || rent.rights == LockRentRights._2">Edit Info</button>
           <button mat-raised-button color="warn" *ngIf="user.role == UserRole._1" (click)="deleteLock(rent.lock.id)">Delete</button>
         </div>
       </div>

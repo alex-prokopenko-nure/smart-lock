@@ -10,6 +10,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { AuthService } from './shared-module/services/auth.service';
 import { AuthGuardService } from './smart-lock-module/guards/auth.guard';
 import { UnauthGuardService } from './smart-lock-module/guards/unauth.guard';
+import { WebsocketService } from './smart-lock-module/services/websocket.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { UnauthGuardService } from './smart-lock-module/guards/unauth.guard';
     },
     AuthService,
     AuthGuardService,
-    UnauthGuardService
+    UnauthGuardService,
+    WebsocketService
   ],
   bootstrap: [AppComponent]
 })

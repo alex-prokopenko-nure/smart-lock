@@ -154,7 +154,7 @@ namespace SmartLock.WebAPI.Services
         public async Task<Lock> EditLock(int lockId, Lock lockModel)
         {
             var lockToEdit = await GetLock(lockId);
-            lockToEdit.Password = lockModel.Password;
+            lockToEdit.Info = lockModel.Info;
             _applicationDbContext.Locks.Update(lockToEdit);
             await _applicationDbContext.SaveChangesAsync();
             return lockToEdit;

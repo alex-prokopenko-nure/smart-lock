@@ -1,31 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/shared-module/services/auth.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
-import { LockRent, User, UserRole, SmartLockApiService, LockRentRights } from 'src/app/shared-module';
+import { LockRent, User, UserRole, SmartLockApiService, LockRentRights, Lock } from 'src/app/shared-module';
 import { LocksService } from '../services/locks.service';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { ActionStatus } from '../enums/action-status.enum';
 import { OperationsComponent } from '../operations/operations.component';
 import { RentersComponent } from '../renters/renters.component';
+import { InfoEditComponent } from '../info-edit/info-edit.component';
+import { WebsocketService } from '../services/websocket.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   lockRents: LockRent[];
   fullName: string;
   user: User;
   userId: number;
   isDownloaded: boolean = false;
+  lockOperationsSubscription: Subscription;
 
   constructor(
     private authService: AuthService,
     private locksService: LocksService,
     public snackBar: MatSnackBar,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private webSocketService: WebsocketService
   ) { 
+    this.lockOperationsSubscription = webSocketService.lockOperationsSubject.subscribe(
+      event => {
+        this.setState(event.lockId, event.locked);
+      }
+    );
     this.userId = authService.currentUserId;
     authService.getUserInfo().subscribe(result => {
       this.user = result;
@@ -49,6 +59,19 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy(): void {
+    this.lockOperationsSubscription.unsubscribe();
+  }
+
+  setState = (lockId: number, locked: boolean) => {
+    this.lockRents.forEach(element => {
+      if (element.lockId == lockId) {
+        element.lock.locked = locked;
+        this.snackBar.open("Lock with id " + lockId + " has been " + (locked ? "locked" : "opened"), "Notification", {duration: 3000})
+      }
+    });
   }
 
   addLock = () => {
@@ -91,6 +114,27 @@ export class HomeComponent implements OnInit {
   showRenters = (lockRent: LockRent) => {
     const dialogRef = this.dialog.open(RentersComponent, {
       data: {rights: lockRent.rights, lockId: lockRent.lockId, userId: this.userId}
+    });
+  }
+
+  editInfo = (lock: Lock) => {
+    const dialogRef = this.dialog.open(InfoEditComponent, {
+      data: {lock: lock}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        let newLock = new Lock();
+        newLock.info = result;
+        this.locksService.updateLockInfo(lock.id, newLock).subscribe(
+          response => {
+            this.locksService.getUserRents(this.userId).subscribe(
+              result => {
+                this.lockRents = result
+              }
+            );
+          }
+        );
+      }
     });
   }
 }

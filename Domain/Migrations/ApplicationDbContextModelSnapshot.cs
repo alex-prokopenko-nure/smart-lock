@@ -26,6 +26,8 @@ namespace Domain.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Info");
+
                     b.Property<bool>("Locked");
 
                     b.Property<string>("Password");

@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using Domain.Common.Enums;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using SmartLock.WebAPI.Hubs;
+using SmartLock.WebAPI.Hubs.Interfaces;
 using SmartLock.WebAPI.Services.Interfaces;
 using SmartLock.WebAPI.ViewModels;
 
@@ -16,11 +19,17 @@ namespace SmartLock.WebAPI.Controllers
     {
         private readonly ILocksService _locksService;
         private readonly IUsersService _usersService;
+        private readonly IHubContext<LockHub, ILockHub> _hubContext;
 
-        public LocksController(ILocksService locksService, IUsersService usersService)
+        public LocksController(
+            ILocksService locksService, 
+            IUsersService usersService, 
+            IHubContext<LockHub, ILockHub> hubContext
+            )
         {
             _locksService = locksService;
             _usersService = usersService;
+            _hubContext = hubContext;
         }
 
         #region Get
@@ -65,6 +74,7 @@ namespace SmartLock.WebAPI.Controllers
         public async Task<IActionResult> Opened(int lockId)
         {
             await _locksService.LockOpened(lockId);
+            await _hubContext.Clients.All.SetLockState(lockId, false);
             return Ok();
         }
 
@@ -72,6 +82,7 @@ namespace SmartLock.WebAPI.Controllers
         public async Task<IActionResult> Closed(int lockId)
         {
             await _locksService.LockClosed(lockId);
+            await _hubContext.Clients.All.SetLockState(lockId, true);
             return Ok();
         }
 

@@ -886,6 +886,7 @@ export class SmartLockApiService {
 export class Lock implements ILock {
     id?: number | undefined;
     password?: string | undefined;
+    info?: string | undefined;
     locked?: boolean | undefined;
     lockOperations?: LockOperation[] | undefined;
     lockRents?: LockRent[] | undefined;
@@ -903,6 +904,7 @@ export class Lock implements ILock {
         if (data) {
             this.id = data["id"];
             this.password = data["password"];
+            this.info = data["info"];
             this.locked = data["locked"];
             if (data["lockOperations"] && data["lockOperations"].constructor === Array) {
                 this.lockOperations = [];
@@ -928,6 +930,7 @@ export class Lock implements ILock {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["password"] = this.password;
+        data["info"] = this.info;
         data["locked"] = this.locked;
         if (this.lockOperations && this.lockOperations.constructor === Array) {
             data["lockOperations"] = [];
@@ -946,6 +949,7 @@ export class Lock implements ILock {
 export interface ILock {
     id?: number | undefined;
     password?: string | undefined;
+    info?: string | undefined;
     locked?: boolean | undefined;
     lockOperations?: LockOperation[] | undefined;
     lockRents?: LockRent[] | undefined;
@@ -1139,7 +1143,7 @@ export class ShareRightsViewModel implements IShareRightsViewModel {
     adminId?: number | undefined;
     ownerId?: number | undefined;
     lockId?: number | undefined;
-    rights?: ShareRightsViewModelRights | undefined;
+    rights?: LockRentRights | undefined;
     from?: Date | undefined;
     to?: Date | undefined;
 
@@ -1186,7 +1190,7 @@ export interface IShareRightsViewModel {
     adminId?: number | undefined;
     ownerId?: number | undefined;
     lockId?: number | undefined;
-    rights?: ShareRightsViewModelRights | undefined;
+    rights?: LockRentRights | undefined;
     from?: Date | undefined;
     to?: Date | undefined;
 }
@@ -1298,12 +1302,6 @@ export enum LockRentRights {
 export enum UserRole {
     _1 = 1, 
     _2 = 2, 
-}
-
-export enum ShareRightsViewModelRights {
-    _1 = 1, 
-    _2 = 2, 
-    _3 = 3, 
 }
 
 export class SwaggerException extends Error {

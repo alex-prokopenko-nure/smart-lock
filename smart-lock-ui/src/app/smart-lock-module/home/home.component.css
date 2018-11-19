@@ -40,8 +40,8 @@
     border-radius: 0.5rem;
     margin-top: 12px;
     margin-bottom: 12px;
-    margin-left: 20rem;
-    margin-right: 20rem;
+    margin-left: 14rem;
+    margin-right: 14rem;
     border: 2px solid rgb(26,26,26);
 }
 
@@ -75,4 +75,11 @@
     padding-top: 0.8rem;
     padding-left: 0.8rem;
     padding-right: calc(0.8rem + 10px);
+}
+
+.info {
+    width: 280px;
+    font-size: 16px;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
