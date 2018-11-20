@@ -123,11 +123,7 @@ namespace SmartLock.WebAPI.Services
 
         public async Task<IEnumerable<LockOperation>> GetOperations(int lockId, int userId)
         {
-            var currRent = await _applicationDbContext.LockRents
-                .FirstOrDefaultAsync(x => x.LockId == lockId && x.UserId == userId && CheckTiming(x) && 
-                    x.RentStart == _applicationDbContext.LockRents
-                    .Where(z => z.UserId == userId && z.LockId == lockId)
-                    .Max(y => y.RentStart));
+            var currRent = await GetCurrentRent(lockId, userId);
             if (currRent == null)
             {
                 return null;
@@ -138,6 +134,11 @@ namespace SmartLock.WebAPI.Services
 
         public async Task ShareRights(ShareRightsViewModel shareRightsViewModel)
         {
+            var currRent = await GetCurrentRent(shareRightsViewModel.LockId, shareRightsViewModel.OwnerId);
+            if (currRent != null)
+            {
+                return;
+            }
             LockRent ownerRent =
                 new LockRent
                 {
@@ -181,6 +182,15 @@ namespace SmartLock.WebAPI.Services
         {
             DateTime dateTimeNow = DateTime.Now;
             return rent.RentStart <= dateTimeNow && (!rent.RentFinish.HasValue || rent.RentFinish > dateTimeNow);
+        }
+
+        private async Task<LockRent> GetCurrentRent(int lockId, int userId)
+        {
+            return await _applicationDbContext.LockRents
+            .FirstOrDefaultAsync(x => x.LockId == lockId && x.UserId == userId && CheckTiming(x) &&
+                x.RentStart == _applicationDbContext.LockRents
+                .Where(z => z.UserId == userId && z.LockId == lockId)
+                .Max(y => y.RentStart));
         }
 
         public async Task<IEnumerable<LockRent>> GetAllRenters(int lockId, RentRights rights)

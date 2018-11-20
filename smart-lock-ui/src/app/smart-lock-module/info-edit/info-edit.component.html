@@ -1,6 +1,6 @@
 <div style="text-align: center">
   <textarea class="area" [(ngModel)]="lockInfo">    
   </textarea>
-  <button mat-raised-button (click)="edit(lockInfo)">Edit</button>
-  <button mat-raised-button color="warn" (click)="close()">Cancel</button>
+  <button mat-raised-button (click)="edit(lockInfo)">{{ 'infoedit.editbutton' | translate }}</button>
+  <button mat-raised-button color="warn" (click)="close()">{{ 'infoedit.cancelbutton' | translate }}</button>
 </div>

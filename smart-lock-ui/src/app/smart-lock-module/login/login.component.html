@@ -1,13 +1,12 @@
-<app-header></app-header>
 <div class="container">
-  <h2>Log in with your smartlock account</h2>
+  <h2>{{ 'login.title' | translate }}</h2>
   <form [formGroup]="loginForm">
     <mat-form-field>
-      <input matInput class="input" color="warn" placeholder="E-mail" formControlName="email">
+      <input matInput class="input" color="warn" placeholder="{{ 'login.email' | translate }}" formControlName="email">
     </mat-form-field><br/>
     <mat-form-field>
-      <input matInput class="input" color="warn" type="password" placeholder="Password" formControlName="password">
+      <input matInput class="input" color="warn" type="password" placeholder="{{ 'login.password' | translate }}" formControlName="password">
     </mat-form-field><br/>
-    <button mat-flat-button class="input" color="primary" (click)="login()">Login</button>
+    <button mat-flat-button class="input" color="primary" (click)="login()">{{ 'login.button' | translate }}</button>
   </form>
 </div>

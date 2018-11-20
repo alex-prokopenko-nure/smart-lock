@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/shared-module/services/auth.service';
 import { ActionStatus } from '../enums/action-status.enum';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -20,12 +21,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private authService: AuthService,
     private router: Router,
     public snackBar: MatSnackBar,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private translate: TranslateService
     ) {
-    this.loginForm = builder.group({
-      email: ["", Validators.compose([Validators.required, Validators.email])],
-      password: ["", Validators.compose([Validators.required, Validators.minLength(6)])]
-    });
+      this.loginForm = builder.group({
+        email: ["", Validators.compose([Validators.required, Validators.email])],
+        password: ["", Validators.compose([Validators.required, Validators.minLength(6)])]
+      });
   }
 
   ngOnInit() {

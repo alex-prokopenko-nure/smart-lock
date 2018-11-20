@@ -19,7 +19,7 @@ a:active {
 
 .lock {
     float: left;
-    width: 40%;
+    width: 30%;
     cursor: pointer;
 }
 
@@ -47,4 +47,32 @@ a:active {
     float: left;
     margin-block-start: 5px;
     margin-block-end: 0;
+}
+
+.lang {
+    font-size: 18px;
+    margin: 5px;
+    margin-bottom: 15px;
+}
+
+.lang:hover {
+    cursor: default;
+    color: #f2f2f2;
+}
+
+.lang:active {
+    cursor: default;
+    color: #f2f2f2;
+}
+
+.option {
+    margin: 5px;
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.lang-block {
+    display: inline-block;
+    margin-left: 5px;
+    margin-right: 20px;
 }

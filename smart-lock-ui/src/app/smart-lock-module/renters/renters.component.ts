@@ -52,7 +52,7 @@ export class RentersComponent implements OnInit {
       );
 
       this.shareRightsForm = builder.group({
-        rights: [Validators.required],
+        rights: [3, Validators.required],
         username: ["", Validators.required],
         userId: [Validators.required]
       });

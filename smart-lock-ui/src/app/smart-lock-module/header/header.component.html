@@ -4,9 +4,14 @@
     <p class="name">SmartLock</p>
   </div>
   <div class="nav-bar">
-    <a *ngIf="isLoggedIn()" (click)="navigateToHome()">Home</a>
-    <a *ngIf="!isLoggedIn()" (click)="navigateToLogin()">Login</a>
-    <a *ngIf="!isLoggedIn()" (click)="navigateToRegister()">Register</a>
-    <a *ngIf="isLoggedIn()" (click)="logout()">Sign out</a>
+    <div class="lang-block">
+      <a class="option" (click)="switchLanguage('en')">{{ 'header.english' | translate }}</a>
+      <a class="option" (click)="switchLanguage('ua')">{{ 'header.ukrainian' | translate }}</a>
+    </div>
+    <a *ngIf="isLoggedIn()" (click)="navigateToHome()">{{ 'header.home' | translate }}</a>
+    <a *ngIf="!isLoggedIn()" (click)="navigateToLogin()">{{ 'header.login' | translate }}</a>
+    <a *ngIf="!isLoggedIn()" (click)="navigateToRegister()">{{ 'header.register' | translate }}</a>
+    <a (click)="navigateToContacts()">{{ 'header.contacts' | translate }}</a>
+    <a *ngIf="isLoggedIn()" (click)="logout()">{{ 'header.signout' | translate }}</a>
   </div>
 </div>

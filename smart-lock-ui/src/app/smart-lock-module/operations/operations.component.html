@@ -5,13 +5,13 @@
 
   <!-- Position Column -->
   <ng-container matColumnDef="Operation">
-    <th mat-header-cell *matHeaderCellDef> Operation </th>
+    <th mat-header-cell *matHeaderCellDef> {{ 'operations.operation' | translate }} </th>
     <td mat-cell *matCellDef="let element"> {{ getState(element.state) }} </td>
   </ng-container>
 
   <!-- Name Column -->
   <ng-container matColumnDef="Time">
-    <th mat-header-cell *matHeaderCellDef> Time </th>
+    <th mat-header-cell *matHeaderCellDef> {{ 'operations.time' | translate }} </th>
     <td mat-cell *matCellDef="let element"> {{ element.createTime | date: "long" }} </td>
   </ng-container>
 

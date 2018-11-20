@@ -1,22 +1,21 @@
-<app-header></app-header>
 <div class="container">
-  <h2>Create account to use smartlock system</h2>
+  <h2>{{ 'register.title' | translate }}</h2>
   <form [formGroup]="registerForm">
     <mat-form-field>
-      <input matInput class="input" color="warn" placeholder="E-mail" formControlName="email">
+      <input matInput class="input" color="warn" placeholder="{{ 'register.email' | translate }}" formControlName="email">
     </mat-form-field><br/>
     <mat-form-field>
-      <input matInput class="input" color="warn" placeholder="Username" formControlName="username">
+      <input matInput class="input" color="warn" placeholder="{{ 'register.username' | translate }}" formControlName="username">
     </mat-form-field><br/>
     <mat-form-field>
-      <input matInput class="input" color="warn" placeholder="First name" formControlName="firstName">
+      <input matInput class="input" color="warn" placeholder="{{ 'register.firstname' | translate }}" formControlName="firstName">
     </mat-form-field><br/>
     <mat-form-field>
-      <input matInput class="input" color="warn" placeholder="Last name" formControlName="lastName">
+      <input matInput class="input" color="warn" placeholder="{{ 'register.lastname' | translate }}" formControlName="lastName">
     </mat-form-field><br/>
     <mat-form-field>
-      <input matInput class="input" color="warn" type="password" placeholder="Password" formControlName="password">
+      <input matInput class="input" color="warn" type="password" placeholder="{{ 'register.password' | translate }}" formControlName="password">
     </mat-form-field><br/>
-    <button mat-flat-button class="input" color="primary" (click)="register()">Register</button>
+    <button mat-flat-button class="input" color="primary" (click)="register()">{{ 'register.button' | translate }}</button>
   </form>
 </div>

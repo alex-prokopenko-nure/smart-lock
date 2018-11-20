@@ -1,22 +1,22 @@
 <table mat-table [dataSource]="tableSource" class="mat-elevation-z8">
   <ng-container matColumnDef="Name">
-    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <th mat-header-cell *matHeaderCellDef> {{ 'renters.name' | translate }} </th>
     <td mat-cell *matCellDef="let element"> {{ getName(element) }} </td>
   </ng-container>
 
   <ng-container matColumnDef="Timing">
-    <th mat-header-cell *matHeaderCellDef> Timing </th>
+    <th mat-header-cell *matHeaderCellDef> {{ 'renters.timing' | translate }} </th>
     <td mat-cell *matCellDef="let element"> {{ element.rentStart | date: "medium" }} - {{ element.rentFinish | date: "medium" }}</td>
   </ng-container>
 
   <ng-container matColumnDef="Rights">
-    <th mat-header-cell *matHeaderCellDef> Rights </th>
+    <th mat-header-cell *matHeaderCellDef> {{ 'renters.rights' | translate }} </th>
     <td mat-cell *matCellDef="let element"> {{ getRights(element) }} </td>
   </ng-container>
 
   <ng-container *ngIf="rights == LockRentRights._1 || rights == LockRentRights._2" matColumnDef="Actions">
-    <th mat-header-cell *matHeaderCellDef> Actions </th>
-    <td mat-cell *matCellDef="let element"><button mat-raised-button (click)="cancelRent(element)" color="warn">Cancel rent</button></td>
+    <th mat-header-cell *matHeaderCellDef> {{ 'renters.actions' | translate }} </th>
+    <td mat-cell *matCellDef="let element"><button mat-raised-button (click)="cancelRent(element)" color="warn">{{ 'renters.cancelbutton' | translate }}</button></td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -29,9 +29,9 @@
       <option value="{{LockRentRights._3}}">Renter</option>
     </select>
     <mat-form-field>
-      <input matInput placeholder="User's username" [matAutocomplete]="auto" formControlName="username">
+      <input matInput placeholder="{{ 'renters.username' | translate }}" [matAutocomplete]="auto" formControlName="username">
     </mat-form-field>
-    <button mat-raised-button (click)="shareRights()">Share rights</button>
+    <button mat-raised-button (click)="shareRights()">{{ 'renters.sharerights' | translate }}</button>
   </form>
 </div>
 

@@ -1,0 +1,63 @@
+{
+    "login": {
+        "title": "Увійдіть в обліковий запис smartlock",
+        "email": "Електронна пошта",
+        "password": "Пароль",
+        "button": "Увійти"
+    },
+    "header": {
+        "login": "Увійти",
+        "register": "Зареєструватися",
+        "home": "Головна",
+        "contacts": "Контакти",
+        "signout": "Вийти",
+        "english": "АНГЛ",
+        "ukrainian": "УКР"
+    },
+    "contacts": {
+        "title": "Наші контакти",
+        "email": "Електронна пошта",
+        "phone": "Телефон",
+        "telegram": "Телеграм"
+    },
+    "register": {
+        "title": "Створіть обліковий запис у системі smartlock",
+        "email": "Електронна пошта",
+        "username": "Нікнейм",
+        "firstname": "Ім'я",
+        "lastname": "Прізвище",
+        "password": "Пароль",
+        "button": "Реєстрація"
+    },
+    "home": {
+        "addbutton": "Новий Замок",
+        "editbutton": "Редагувати",
+        "activitybutton": "Дії з замком",
+        "rentersbutton": "Орендарі",
+        "deletebutton": "Видалити",
+        "locked": "Зачинено",
+        "opened": "Відчинено"
+    },
+    "infoedit": {
+        "editbutton": "Редагувати",
+        "cancelbutton": "Скасувати"
+    },
+    "deletedialog": {
+        "title": "Ви впевнені, що хочете видалити цей замок?",
+        "okbutton": "Так",
+        "cancelbutton": "Скасувати"
+    },
+    "operations": {
+        "operation": "Операція",
+        "time": "Час"
+    },
+    "renters": {
+        "name": "Ім'я",
+        "timing": "Часові межі",
+        "rights": "Права",
+        "actions": "Дії",
+        "cancelbutton": "Скасувати оренду",
+        "sharerights": "Поділитися правами",
+        "username": "Нікнейм користувача"
+    }
+}

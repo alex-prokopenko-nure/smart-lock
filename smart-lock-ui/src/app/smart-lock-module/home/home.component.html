@@ -1,9 +1,8 @@
-<app-header></app-header>
 <div class="main-content">
   <mat-spinner *ngIf="!isDownloaded"></mat-spinner>
   <div class="wrapper" *ngIf="isDownloaded">
     <div *ngIf="user.role == UserRole._1" class="add-lock">
-      <button mat-flat-button class="input" color="primary" (click)="addLock()"><span class="biggy">+</span>New Lock</button>
+      <button mat-flat-button class="input" color="primary" (click)="addLock()"><span class="biggy">+</span>{{ 'home.addbutton' | translate }}</button>
     </div>
     <div class="lock" *ngFor="let rent of lockRents">
       <div class="lock-wrapper">
@@ -11,16 +10,16 @@
           {{ rent.lock.id }}
         </div>
         <div class="section locked" [ngClass]="{'opened' : !rent.lock.locked}">
-          {{ rent.lock.locked ? "Locked" : "Opened" }}
+          {{ rent.lock.locked ? languageService.getLocked() : languageService.getOpened() }}
         </div>
         <div class="section info">
           {{ rent.lock.info }}
         </div>
         <div class="actions">
-          <button mat-raised-button (click)="showOperations(rent.lock.id)">Show operations</button>
-          <button mat-raised-button (click)="showRenters(rent)" *ngIf="rent.rights == LockRentRights._1 || rent.rights == LockRentRights._2">Show renters</button>
-          <button mat-raised-button (click)="editInfo(rent.lock)" *ngIf="rent.rights == LockRentRights._1 || rent.rights == LockRentRights._2">Edit Info</button>
-          <button mat-raised-button color="warn" *ngIf="user.role == UserRole._1" (click)="deleteLock(rent.lock.id)">Delete</button>
+          <button mat-raised-button (click)="showOperations(rent.lock.id)">{{ 'home.activitybutton' | translate }}</button>
+          <button mat-raised-button (click)="showRenters(rent)" *ngIf="rent.rights == LockRentRights._1 || rent.rights == LockRentRights._2">{{ 'home.rentersbutton' | translate }}</button>
+          <button mat-raised-button (click)="editInfo(rent.lock)" *ngIf="rent.rights == LockRentRights._1 || rent.rights == LockRentRights._2">{{ 'home.editbutton' | translate }}</button>
+          <button mat-raised-button color="warn" *ngIf="user.role == UserRole._1" (click)="deleteLock(rent.lock.id)">{{ 'home.deletebutton' | translate }}</button>
         </div>
       </div>
     </div>

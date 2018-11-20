@@ -43,7 +43,6 @@ import {
   MatToolbarModule,
   MatTableModule
 } from '@angular/material';
-import { HeaderComponent } from './header/header.component';
 import { LocksService } from './services/locks.service';
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 import { OperationsComponent } from './operations/operations.component';
@@ -51,17 +50,23 @@ import { RentersComponent } from './renters/renters.component';
 import { UsersService } from './services/users.service';
 import { InfoEditComponent } from './info-edit/info-edit.component';
 import { WebsocketService } from './services/websocket.service';
+import { ContactsComponent } from './contacts/contacts.component';
+import { LanguageService } from './services/language.service';
+import { SmartLockComponent } from './smart-lock.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
     LoginComponent, 
     RegisterComponent, 
     HomeComponent, 
-    HeaderComponent,
     DeleteDialogComponent,
     OperationsComponent,
     RentersComponent,
-    InfoEditComponent
+    InfoEditComponent,
+    ContactsComponent,
+    SmartLockComponent,
+    HeaderComponent
   ],
   imports: [
     CommonModule,
@@ -109,13 +114,17 @@ import { WebsocketService } from './services/websocket.service';
   providers: [
     LocksService,
     UsersService,
-    WebsocketService
+    WebsocketService,
+    LanguageService
   ],
   entryComponents: [
     DeleteDialogComponent,
     OperationsComponent,
     RentersComponent,
     InfoEditComponent
+  ],
+  bootstrap: [
+    SmartLockComponent
   ]
 })
 export class SmartLockModule { }

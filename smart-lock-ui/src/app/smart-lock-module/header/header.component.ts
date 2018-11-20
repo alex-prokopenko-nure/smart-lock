@@ -3,6 +3,8 @@ import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared-module/services/auth.service';
+import { TranslateService } from '@ngx-translate/core';
+import { LanguageService } from '../services/language.service';
 
 @Component({
   selector: 'app-header',
@@ -15,8 +17,11 @@ export class HeaderComponent implements OnInit {
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService,
+    private languageService: LanguageService
     ) { 
+      languageService.getLanguage();
       iconRegistry.addSvgIcon(
         "padlock",
         sanitizer.bypassSecurityTrustResourceUrl("assets/img/padlock.svg")
@@ -30,9 +35,13 @@ export class HeaderComponent implements OnInit {
 
   logout = () => this.authService.logout()
 
-  navigateToHome = () => this.router.navigateByUrl("/smartlock/home");
+  navigateToHome = () => this.router.navigateByUrl("/smartlock/home")
 
-  navigateToLogin = () => this.router.navigateByUrl("/smartlock/login");
+  navigateToLogin = () => this.router.navigateByUrl("/smartlock/login")
 
-  navigateToRegister = () => this.router.navigateByUrl("/smartlock/register");
+  navigateToRegister = () => this.router.navigateByUrl("/smartlock/register")
+
+  navigateToContacts = () => this.router.navigateByUrl("/smartlock/contacts")
+
+  switchLanguage = (lang: string) => this.languageService.setLanguage(lang);
 }

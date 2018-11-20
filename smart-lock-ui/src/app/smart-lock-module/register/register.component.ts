@@ -5,6 +5,8 @@ import { AuthService } from 'src/app/shared-module/services/auth.service';
 import { Router } from '@angular/router';
 import { ActionStatus } from '../enums/action-status.enum';
 import { MatSnackBar } from '@angular/material';
+import { TranslateService } from '@ngx-translate/core';
+import { LanguageService } from '../services/language.service';
 
 @Component({
   selector: 'app-register',
