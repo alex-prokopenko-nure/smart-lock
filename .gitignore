@@ -5,3 +5,11 @@
 /Domain/bin
 /Domain/obj
 /.vs
+/SmartLock.Mobile/SmartLock.Mobile/bin
+/SmartLock.Mobile/SmartLock.Mobile/obj
+/SmartLock.Mobile/SmartLock.Mobile.Android/bin
+/SmartLock.Mobile/SmartLock.Mobile.Android/obj
+/SmartLock.Mobile/SmartLock.Mobile.iOS/bin
+/SmartLock.Mobile/SmartLock.Mobile.iOS/obj
+/SmartLock.Mobile/SmartLock.Mobile.UWP/bin
+/SmartLock.Mobile/SmartLock.Mobile.UWP/obj
