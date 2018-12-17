@@ -20,6 +20,8 @@ using SmartLock.WebAPI.Models;
 using SmartLock.WebAPI.Services;
 using SmartLock.WebAPI.Services.Interfaces;
 using Swashbuckle.AspNetCore.Swagger;
+using System.IO;
+using System.Reflection;
 
 namespace SmartLock.WebAPI
 {
@@ -90,6 +92,10 @@ namespace SmartLock.WebAPI
                     Description = "Swagger Core API documentation",
                     Version = "v1"
                 });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+
+                c.IncludeXmlComments(xmlPath);
             });
         }
 
