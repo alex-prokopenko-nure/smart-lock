@@ -33,6 +33,12 @@ namespace SmartLock.WebAPI.Controllers
         }
 
         #region Get
+
+        /// <summary>
+        /// Retrieve the Lock by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the desired Lock</param>
+        /// <returns>Queried Lock</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Lock>> GetLock(int id)
         {
