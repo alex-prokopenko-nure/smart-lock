@@ -4,7 +4,11 @@ using System.Text;
 
 namespace SmartLock.Mobile.ViewModels
 {
-    class RegisterViewModel
+    class RegisterViewModel : BaseViewModel
     {
+        public RegisterViewModel()
+        {
+            Title = "Register";
+        }
     }
 }
