@@ -10,6 +10,8 @@ using Xamarin.Forms.Xaml;
 using SmartLock.Mobile.Models;
 using SmartLock.Mobile.Views;
 using SmartLock.Mobile.ViewModels;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
 
 namespace SmartLock.Mobile.Views
 {
@@ -22,12 +24,17 @@ namespace SmartLock.Mobile.Views
         {
             InitializeComponent();
 
-            BindingContext = viewModel = new ItemsViewModel();
+            var handler = new JwtSecurityTokenHandler();
+            var token = handler.ReadJwtToken(Application.Current.Properties["jwt_token"].ToString());
+            int userId = Convert.ToInt32(token.Claims.First(x => x.Type == "sub").Value);
+            Application.Current.Properties["user_id"] = userId;
+
+            BindingContext = viewModel = new ItemsViewModel(userId);
         }
 
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
         {
-            var item = args.SelectedItem as Item;
+            var item = args.SelectedItem as Lock;
             if (item == null)
                 return;
 

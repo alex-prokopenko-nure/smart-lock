@@ -9,7 +9,8 @@ namespace SmartLock.Mobile.Models
         Browse,
         About,
         Login,
-        Register
+        Register,
+        Logout
     }
     public class HomeMenuItem
     {

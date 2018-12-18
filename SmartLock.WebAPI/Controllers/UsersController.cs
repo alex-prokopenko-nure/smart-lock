@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SmartLock.WebAPI.Services.Interfaces;
@@ -23,6 +24,7 @@ namespace SmartLock.WebAPI.Controllers
             _tokenService = tokenService;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
         {
@@ -59,6 +61,7 @@ namespace SmartLock.WebAPI.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost("{userId}/info")]
         public async Task<ActionResult<User>> GetUserInfo(int userId)
         {

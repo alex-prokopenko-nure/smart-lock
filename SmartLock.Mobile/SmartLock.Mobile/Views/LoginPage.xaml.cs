@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using RestSharp;
+using SmartLock.Mobile.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,20 +15,20 @@ namespace SmartLock.Mobile.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class LoginPage : ContentPage
 	{
-		public LoginPage ()
+        MainPage RootPage { get => Application.Current.MainPage as MainPage; }
+        LoginViewModel viewModel;
+
+        public LoginPage ()
 		{
 			InitializeComponent();
 
+            BindingContext = viewModel = new LoginViewModel();
+
             var title = new Label
             {
-                Text = "Welcome to CloudCakes",
+                Text = "Welcome to SmartLock",
                 FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
-            };
-
-            var aboutButton = new Button
-            {
-                Text = "About Us"
             };
 
             var register = new Button
@@ -33,14 +36,6 @@ namespace SmartLock.Mobile.Views
                 Text = "Register"
             };
 
-            // Here we are implementing a click event using lambda expressions
-            // when a user clicks the `aboutButton` they will navigate to the
-            // About Us page.
-            aboutButton.Clicked += (object sender, EventArgs e) => {
-                Navigation.PushAsync(new AboutPage());
-            };
-
-            // Navigation to the Signup Page (Note: We haven't created this page yet)
             register.Clicked += (object sender, EventArgs e) => {
                 Navigation.PushAsync(new RegisterPage());
             };
@@ -61,18 +56,29 @@ namespace SmartLock.Mobile.Views
                 Text = "Login"
             };
 
-            // With the `PushModalAsync` method we navigate the user
-            // the the orders page and do not give them an option to
-            // navigate back to the Homepage by clicking the back button
-            login.Clicked += (sender, e) => {
-                Navigation.PushModalAsync(new ItemsPage());
+            login.Clicked += async (sender, e) => {
+                var client = new RestClient("http://9fcc8378.ngrok.io");
+                var request = new RestRequest("api/Users/login", Method.POST);
+                request.AddJsonBody(new
+                {
+                    Email = email.Text,
+                    Password = password.Text
+                });
+                IRestResponse response = client.Execute(request);
+                if (response.IsSuccessful)
+                {
+                    string jwtToken = JsonConvert.DeserializeObject<string>(response.Content);
+                    Application.Current.Properties["jwt_token"] = jwtToken;
+                    await RootPage.Login();
+                    await Navigation.PushModalAsync(new ItemsPage());
+                }
             };
 
             Content = new StackLayout
             {
                 Padding = 30,
                 Spacing = 10,
-                Children = { title, email, password, login, register, aboutButton }
+                Children = { title, email, password, login, register }
             };
         }
 

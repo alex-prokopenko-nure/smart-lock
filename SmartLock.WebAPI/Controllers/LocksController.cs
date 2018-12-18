@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Domain.Common.Enums;
 using Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using SmartLock.WebAPI.Hubs;
@@ -39,6 +40,7 @@ namespace SmartLock.WebAPI.Controllers
         /// </summary>
         /// <param name="id">The ID of the desired Lock</param>
         /// <returns>Queried Lock</returns>
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Lock>> GetLock(int id)
         {
@@ -46,6 +48,7 @@ namespace SmartLock.WebAPI.Controllers
             return Ok(result);
         }
 
+        [Authorize]
         [HttpGet("all-locks/{userId}")]
         public async Task<ActionResult<IEnumerable<LockRent>>> GetAllUsersLocks(int userId)
         {
@@ -53,6 +56,7 @@ namespace SmartLock.WebAPI.Controllers
             return Ok(result);
         }
 
+        [Authorize]
         [HttpGet("{lockId}/renters")]
         public async Task<ActionResult<IEnumerable<LockRent>>> GetAllRenters(int lockId, RentRights rights)
         {
@@ -60,6 +64,7 @@ namespace SmartLock.WebAPI.Controllers
             return Ok(result);
         }
 
+        [Authorize]
         [HttpGet("{lockId}/operations")]
         public async Task<ActionResult<IEnumerable<LockOperation>>> GetLockOperations(int lockId, int userId)
         {
@@ -69,6 +74,7 @@ namespace SmartLock.WebAPI.Controllers
         #endregion
 
         #region Post
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateLock()
         {
@@ -99,6 +105,7 @@ namespace SmartLock.WebAPI.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpPost("share-rights")]
         public async Task<IActionResult> ShareRights(ShareRightsViewModel shareRightsViewModel)
         {
@@ -108,6 +115,7 @@ namespace SmartLock.WebAPI.Controllers
         #endregion
 
         #region Put
+        [Authorize]
         [HttpPut("{lockId}")]
         public async Task<IActionResult> EditLock(int lockId, Lock lockModel)
         {
@@ -117,6 +125,7 @@ namespace SmartLock.WebAPI.Controllers
         #endregion
 
         #region Delete
+        [Authorize]
         [HttpDelete("{lockId}")]
         public async Task<IActionResult> DeleteLock(int lockId)
         {
@@ -124,6 +133,7 @@ namespace SmartLock.WebAPI.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpDelete("{lockId}/cancel/{userId}")]
         public async Task<IActionResult> CancelRights(int lockId, int userId)
         {

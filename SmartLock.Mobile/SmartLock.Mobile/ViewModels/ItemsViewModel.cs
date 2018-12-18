@@ -7,29 +7,25 @@ using Xamarin.Forms;
 
 using SmartLock.Mobile.Models;
 using SmartLock.Mobile.Views;
+using RestSharp;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace SmartLock.Mobile.ViewModels
 {
     public class ItemsViewModel : BaseViewModel
     {
-        public ObservableCollection<Item> Items { get; set; }
+        public ObservableCollection<Lock> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
 
-        public ItemsViewModel()
+        public ItemsViewModel(int userId)
         {
-            Title = "Browse";
-            Items = new ObservableCollection<Item>();
-            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-
-            MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddItem", async (obj, item) =>
-            {
-                var newItem = item as Item;
-                Items.Add(newItem);
-                await DataStore.AddItemAsync(newItem);
-            });
+            Title = "Your Locks";
+            Items = new ObservableCollection<Lock>();
+            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand(userId));
         }
 
-        async Task ExecuteLoadItemsCommand()
+        async Task ExecuteLoadItemsCommand(int userId)
         {
             if (IsBusy)
                 return;
@@ -39,10 +35,16 @@ namespace SmartLock.Mobile.ViewModels
             try
             {
                 Items.Clear();
-                var items = await DataStore.GetItemsAsync(true);
-                foreach (var item in items)
+                var client = new RestClient("http://9fcc8378.ngrok.io");
+                var request = new RestRequest($"/api/Locks/all-locks/{userId}", Method.GET);
+                IRestResponse response = client.Execute(request);
+                if (response.IsSuccessful)
                 {
-                    Items.Add(item);
+                    var lockRents = JsonConvert.DeserializeObject<List<LockRent>>(response.Content);
+                    foreach (var rent in lockRents)
+                    {
+                        Items.Add(rent.Lock);
+                    }
                 }
             }
             catch (Exception ex)

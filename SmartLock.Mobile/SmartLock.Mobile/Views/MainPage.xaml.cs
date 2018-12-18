@@ -10,6 +10,7 @@ namespace SmartLock.Mobile.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : MasterDetailPage
     {
+        MenuPage MenuPage { get => Master as MenuPage; }
         Dictionary<int, NavigationPage> MenuPages = new Dictionary<int, NavigationPage>();
         public MainPage()
         {
@@ -17,7 +18,7 @@ namespace SmartLock.Mobile.Views
 
             MasterBehavior = MasterBehavior.Popover;
 
-            MenuPages.Add((int)MenuItemType.Browse, (NavigationPage)Detail);
+            MenuPages.Add((int)MenuItemType.Login, (NavigationPage)Detail);
         }
 
         public async Task NavigateFromMenu(int id)
@@ -52,6 +53,16 @@ namespace SmartLock.Mobile.Views
 
                 IsPresented = false;
             }
+        }
+
+        public async Task Login()
+        {
+            MenuPage.Login();
+            Detail = MenuPages[(int)MenuItemType.Browse];
+            if (Device.RuntimePlatform == Device.Android)
+                await Task.Delay(100);
+
+            IsPresented = false;
         }
     }
 }
