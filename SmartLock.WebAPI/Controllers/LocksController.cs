@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Domain.Common.Enums;
 using Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using SmartLock.WebAPI.Hubs;
@@ -39,6 +40,7 @@ namespace SmartLock.WebAPI.Controllers
         /// </summary>
         /// <param name="id">The ID of the desired Lock</param>
         /// <returns>Queried Lock</returns>
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Lock>> GetLock(int id)
         {
@@ -46,7 +48,8 @@ namespace SmartLock.WebAPI.Controllers
             return Ok(result);
         }
 
-        /// <summary>
+        [Authorize]
+		/// <summary>
         /// Returns all Locks rented by given user.
         /// </summary>
         /// <param name="userId">The ID of the user</param>
@@ -58,6 +61,7 @@ namespace SmartLock.WebAPI.Controllers
             return Ok(result);
         }
 
+		[Authorize]
         /// <summary>
         /// Returns all renters for given lock rented with some rights.
         /// </summary>
@@ -71,6 +75,7 @@ namespace SmartLock.WebAPI.Controllers
             return Ok(result);
         }
 
+		[Authorize]
         /// <summary>
         /// Returns all operations for user on the rent period.
         /// </summary>
@@ -86,6 +91,7 @@ namespace SmartLock.WebAPI.Controllers
         #endregion
 
         #region Post
+		[Authorize]
         /// <summary>
         /// Creates new lock in the system.
         /// </summary>
@@ -135,6 +141,7 @@ namespace SmartLock.WebAPI.Controllers
             return Ok();
         }
 
+		[Authorize]
         /// <summary>
         /// Shares rights on the lock to another user.
         /// </summary>
@@ -149,6 +156,7 @@ namespace SmartLock.WebAPI.Controllers
         #endregion
 
         #region Put
+		[Authorize]
         /// <summary>
         /// Edits the Lock by its ID.
         /// </summary>
@@ -164,6 +172,7 @@ namespace SmartLock.WebAPI.Controllers
         #endregion
 
         #region Delete
+		[Authorize]
         /// <summary>
         /// Deletes the Lock by its ID.
         /// </summary>
@@ -176,6 +185,7 @@ namespace SmartLock.WebAPI.Controllers
             return Ok();
         }
 
+		[Authorize]
         /// <summary>
         /// Cancels lock rent by lockId and userId.
         /// </summary>
