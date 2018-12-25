@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.28010.0
+VisualStudioVersion = 15.0.26730.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartLock.WebAPI", "SmartLock.WebAPI\SmartLock.WebAPI.csproj", "{71BECC1F-5D8C-4023-AD3E-997B15F1255B}"
 EndProject
@@ -11,7 +11,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartLock.Mobile.Android", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartLock.Mobile.iOS", "SmartLock.Mobile\SmartLock.Mobile.iOS\SmartLock.Mobile.iOS.csproj", "{096F8E76-39B8-4307-9A0A-7FC1B00F94F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartLock.Mobile", "SmartLock.Mobile\SmartLock.Mobile\SmartLock.Mobile.csproj", "{C3FC2DEB-4577-4DEA-88B1-52BD68A60DDB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartLock.Mobile", "SmartLock.Mobile\SmartLock.Mobile\SmartLock.Mobile.csproj", "{C3FC2DEB-4577-4DEA-88B1-52BD68A60DDB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartLock.IoTClient", "SmartLock.IoTClient\SmartLock.IoTClient.csproj", "{456D1869-8852-4DAD-A23C-7116CA40234E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -153,6 +155,30 @@ Global
 		{C3FC2DEB-4577-4DEA-88B1-52BD68A60DDB}.Release|x64.Build.0 = Release|Any CPU
 		{C3FC2DEB-4577-4DEA-88B1-52BD68A60DDB}.Release|x86.ActiveCfg = Release|Any CPU
 		{C3FC2DEB-4577-4DEA-88B1-52BD68A60DDB}.Release|x86.Build.0 = Release|Any CPU
+		{456D1869-8852-4DAD-A23C-7116CA40234E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{456D1869-8852-4DAD-A23C-7116CA40234E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{456D1869-8852-4DAD-A23C-7116CA40234E}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{456D1869-8852-4DAD-A23C-7116CA40234E}.Debug|ARM.Build.0 = Debug|Any CPU
+		{456D1869-8852-4DAD-A23C-7116CA40234E}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{456D1869-8852-4DAD-A23C-7116CA40234E}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{456D1869-8852-4DAD-A23C-7116CA40234E}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{456D1869-8852-4DAD-A23C-7116CA40234E}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{456D1869-8852-4DAD-A23C-7116CA40234E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{456D1869-8852-4DAD-A23C-7116CA40234E}.Debug|x64.Build.0 = Debug|Any CPU
+		{456D1869-8852-4DAD-A23C-7116CA40234E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{456D1869-8852-4DAD-A23C-7116CA40234E}.Debug|x86.Build.0 = Debug|Any CPU
+		{456D1869-8852-4DAD-A23C-7116CA40234E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{456D1869-8852-4DAD-A23C-7116CA40234E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{456D1869-8852-4DAD-A23C-7116CA40234E}.Release|ARM.ActiveCfg = Release|Any CPU
+		{456D1869-8852-4DAD-A23C-7116CA40234E}.Release|ARM.Build.0 = Release|Any CPU
+		{456D1869-8852-4DAD-A23C-7116CA40234E}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{456D1869-8852-4DAD-A23C-7116CA40234E}.Release|iPhone.Build.0 = Release|Any CPU
+		{456D1869-8852-4DAD-A23C-7116CA40234E}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{456D1869-8852-4DAD-A23C-7116CA40234E}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{456D1869-8852-4DAD-A23C-7116CA40234E}.Release|x64.ActiveCfg = Release|Any CPU
+		{456D1869-8852-4DAD-A23C-7116CA40234E}.Release|x64.Build.0 = Release|Any CPU
+		{456D1869-8852-4DAD-A23C-7116CA40234E}.Release|x86.ActiveCfg = Release|Any CPU
+		{456D1869-8852-4DAD-A23C-7116CA40234E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

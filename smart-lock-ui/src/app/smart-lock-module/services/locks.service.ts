@@ -36,4 +36,12 @@ export class LocksService {
   cancelRent = (lockId: number, userId: number) => {
     return this.smartLockApiService.apiLocksByLockIdCancelByUserIdDelete(lockId, userId);
   }
+
+  openLock = (lockId: number) => {
+    return this.smartLockApiService.apiLocksByLockIdOpenPost(lockId);
+  }
+
+  closeLock = (lockId: number) => {
+    return this.smartLockApiService.apiLocksByLockIdClosePost(lockId);
+  }
 }

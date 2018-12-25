@@ -48,12 +48,12 @@ namespace SmartLock.WebAPI.Controllers
             return Ok(result);
         }
 
-        [Authorize]
-		/// <summary>
+        /// <summary>
         /// Returns all Locks rented by given user.
         /// </summary>
         /// <param name="userId">The ID of the user</param>
         /// <returns>All locks for user</returns>
+        [Authorize]
         [HttpGet("all-locks/{userId}")]
         public async Task<ActionResult<IEnumerable<LockRent>>> GetAllUsersLocks(int userId)
         {
@@ -61,13 +61,13 @@ namespace SmartLock.WebAPI.Controllers
             return Ok(result);
         }
 
-		[Authorize]
         /// <summary>
         /// Returns all renters for given lock rented with some rights.
         /// </summary>
         /// <param name="lockId">The ID of the lock</param>
         /// <param name="rights">Rights on the rented lock</param>
         /// <returns>All renters for lock</returns>
+        [Authorize]
         [HttpGet("{lockId}/renters")]
         public async Task<ActionResult<IEnumerable<LockRent>>> GetAllRenters(int lockId, RentRights rights)
         {
@@ -75,13 +75,13 @@ namespace SmartLock.WebAPI.Controllers
             return Ok(result);
         }
 
-		[Authorize]
         /// <summary>
         /// Returns all operations for user on the rent period.
         /// </summary>
         /// <param name="lockId">The ID of the desired Lock</param>
         /// <param name="userId">The ID of the desired User</param>
         /// <returns>Queried Lock;s operations</returns>
+        [Authorize]
         [HttpGet("{lockId}/operations")]
         public async Task<ActionResult<IEnumerable<LockOperation>>> GetLockOperations(int lockId, int userId)
         {
@@ -91,15 +91,39 @@ namespace SmartLock.WebAPI.Controllers
         #endregion
 
         #region Post
-		[Authorize]
         /// <summary>
         /// Creates new lock in the system.
         /// </summary>
         /// <returns>OK</returns>
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateLock()
         {
             await _locksService.CreateLock();
+            return Ok();
+        }
+
+        /// <summary>
+        /// Opens Lock.
+        /// </summary>
+        /// <param name="lockId">The ID of the desired Lock</param>
+        /// <returns>OK</returns>
+        [HttpPost("{lockId}/open")]
+        public async Task<IActionResult> Open(int lockId)
+        {
+            await _locksService.OpenLock(lockId);
+            return Ok();
+        }
+
+        /// <summary>
+        /// Closes Lock.
+        /// </summary>
+        /// <param name="lockId">The ID of the desired Lock</param>
+        /// <returns>OK</returns>
+        [HttpPost("{lockId}/close")]
+        public async Task<IActionResult> Close(int lockId)
+        {
+            await _locksService.CloseLock(lockId);
             return Ok();
         }
 
@@ -141,12 +165,12 @@ namespace SmartLock.WebAPI.Controllers
             return Ok();
         }
 
-		[Authorize]
         /// <summary>
         /// Shares rights on the lock to another user.
         /// </summary>
         /// <param name="shareRightsViewModel">View model of sharing query</param>
         /// <returns>OK</returns>
+        [Authorize]
         [HttpPost("share-rights")]
         public async Task<IActionResult> ShareRights(ShareRightsViewModel shareRightsViewModel)
         {
@@ -156,13 +180,13 @@ namespace SmartLock.WebAPI.Controllers
         #endregion
 
         #region Put
-		[Authorize]
         /// <summary>
         /// Edits the Lock by its ID.
         /// </summary>
         /// <param name="lockId">The ID of the desired Lock</param>
         /// <param name="lockModel">The model to be applied</param>
         /// <returns>OK</returns>
+        [Authorize]
         [HttpPut("{lockId}")]
         public async Task<IActionResult> EditLock(int lockId, Lock lockModel)
         {
@@ -172,12 +196,12 @@ namespace SmartLock.WebAPI.Controllers
         #endregion
 
         #region Delete
-		[Authorize]
         /// <summary>
         /// Deletes the Lock by its ID.
         /// </summary>
         /// <param name="lockId">The ID of the desired Lock</param>
         /// <returns>OK</returns>
+        [Authorize]
         [HttpDelete("{lockId}")]
         public async Task<IActionResult> DeleteLock(int lockId)
         {
@@ -185,13 +209,13 @@ namespace SmartLock.WebAPI.Controllers
             return Ok();
         }
 
-		[Authorize]
         /// <summary>
         /// Cancels lock rent by lockId and userId.
         /// </summary>
         /// <param name="lockId">The ID of the desired Lock</param>
         /// <param name="userId">The ID of the desired User</param>
         /// <returns>OK</returns>
+        [Authorize]
         [HttpDelete("{lockId}/cancel/{userId}")]
         public async Task<IActionResult> CancelRights(int lockId, int userId)
         {

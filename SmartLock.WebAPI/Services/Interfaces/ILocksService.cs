@@ -14,6 +14,8 @@ namespace SmartLock.WebAPI.Services.Interfaces
         Task<IEnumerable<LockRent>> GetAllUsersLocks(int userId);
         Task<IEnumerable<LockRent>> GetAllRenters(int lockId, RentRights rights);
         Task CreateLock();
+        Task OpenLock(int id);
+        Task CloseLock(int id);
         Task LockClosed(int id);
         Task LockOpened(int id);
         Task LockFailed(int id);

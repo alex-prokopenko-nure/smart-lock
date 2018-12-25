@@ -141,7 +141,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         userId: this.userId
       }
     });
-  };
+  }
 
   editInfo = (lock: Lock) => {
     const dialogRef = this.dialog.open(InfoEditComponent, {
@@ -160,5 +160,18 @@ export class HomeComponent implements OnInit, OnDestroy {
           });
       }
     });
-  };
+  }
+
+  toggle = (lockId: number) => {
+    let lockRent = this.lockRents.find(x => x.lock.id == lockId);
+    if (lockRent.lock.locked) {
+      this.locksService.openLock(lockId).subscribe(result => {
+        console.log("lock opened");
+      });
+    } else {
+      this.locksService.closeLock(lockId).subscribe(result => {
+        console.log("lock closed");
+      });
+    }
+  }
 }

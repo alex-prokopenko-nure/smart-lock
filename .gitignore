@@ -13,3 +13,5 @@
 /SmartLock.Mobile/SmartLock.Mobile.iOS/obj
 /SmartLock.Mobile/SmartLock.Mobile.UWP/bin
 /SmartLock.Mobile/SmartLock.Mobile.UWP/obj
+/SmartLock.IoTClient/bin
+/SmartLock.IoTClient/obj

@@ -9,7 +9,7 @@
         <div class="section">
           {{ rent.lock.id }}
         </div>
-        <div class="section locked" [ngClass]="{'opened' : !rent.lock.locked}">
+        <div class="section locked" [ngClass]="{'opened' : !rent.lock.locked}" (click)="toggle(rent.lock.id)">
           {{ rent.lock.locked ? languageService.getLocked() : languageService.getOpened() }}
         </div>
         <div class="section info">

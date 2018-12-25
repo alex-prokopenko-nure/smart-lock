@@ -2,6 +2,7 @@
 using Domain.Contexts;
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using RestSharp;
 using SmartLock.WebAPI.Services.Interfaces;
 using SmartLock.WebAPI.ViewModels;
 using System;
@@ -206,6 +207,32 @@ namespace SmartLock.WebAPI.Services
             }
 
             return renters;
+        }
+
+        public async Task OpenLock(int id)
+        {
+            var currentLock = await GetLock(id);
+            var client = new RestClient(currentLock.Address);
+            var request = new RestRequest($"api/iot/{id}/open", Method.POST);
+            IRestResponse response = client.Execute(request);
+            if (response.IsSuccessful)
+            {
+                return;
+            }
+            throw new Exception();
+        }
+
+        public async Task CloseLock(int id)
+        {
+            var currentLock = await GetLock(id);
+            var client = new RestClient(currentLock.Address);
+            var request = new RestRequest($"api/iot/{id}/close", Method.POST);
+            IRestResponse response = client.Execute(request);
+            if (response.IsSuccessful)
+            {
+                return;
+            }
+            throw new Exception();
         }
     }
 }

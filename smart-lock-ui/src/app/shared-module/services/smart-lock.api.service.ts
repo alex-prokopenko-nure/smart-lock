@@ -25,6 +25,8 @@ export class SmartLockApiService {
     }
 
     /**
+     * Returns the Lock by its ID.
+     * @param id The ID of the desired Lock
      * @return Success
      */
     apiLocksByIdGet(id: number): Observable<Lock> {
@@ -79,6 +81,8 @@ export class SmartLockApiService {
     }
 
     /**
+     * Returns all Locks rented by given user.
+     * @param userId The ID of the user
      * @return Success
      */
     apiLocksAllLocksByUserIdGet(userId: number): Observable<LockRent[]> {
@@ -137,7 +141,9 @@ export class SmartLockApiService {
     }
 
     /**
-     * @param rights (optional) 
+     * Returns all renters for given lock rented with some rights.
+     * @param lockId The ID of the lock
+     * @param rights (optional) Rights on the rented lock
      * @return Success
      */
     apiLocksByLockIdRentersGet(lockId: number, rights: LockRentRights | null | undefined): Observable<LockRent[]> {
@@ -198,7 +204,9 @@ export class SmartLockApiService {
     }
 
     /**
-     * @param userId (optional) 
+     * Returns all operations for user on the rent period.
+     * @param lockId The ID of the desired Lock
+     * @param userId (optional) The ID of the desired User
      * @return Success
      */
     apiLocksByLockIdOperationsGet(lockId: number, userId: number | null | undefined): Observable<LockOperation[]> {
@@ -259,6 +267,7 @@ export class SmartLockApiService {
     }
 
     /**
+     * Creates new lock in the system.
      * @return Success
      */
     apiLocksPost(): Observable<void> {
@@ -306,6 +315,112 @@ export class SmartLockApiService {
     }
 
     /**
+     * Opens Lock.
+     * @param lockId The ID of the desired Lock
+     * @return Success
+     */
+    apiLocksByLockIdOpenPost(lockId: number): Observable<void> {
+        let url_ = this.baseUrl + "/api/Locks/{lockId}/open";
+        if (lockId === undefined || lockId === null)
+            throw new Error("The parameter 'lockId' must be defined.");
+        url_ = url_.replace("{lockId}", encodeURIComponent("" + lockId)); 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processApiLocksByLockIdOpenPost(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processApiLocksByLockIdOpenPost(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processApiLocksByLockIdOpenPost(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * Closes Lock.
+     * @param lockId The ID of the desired Lock
+     * @return Success
+     */
+    apiLocksByLockIdClosePost(lockId: number): Observable<void> {
+        let url_ = this.baseUrl + "/api/Locks/{lockId}/close";
+        if (lockId === undefined || lockId === null)
+            throw new Error("The parameter 'lockId' must be defined.");
+        url_ = url_.replace("{lockId}", encodeURIComponent("" + lockId)); 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processApiLocksByLockIdClosePost(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processApiLocksByLockIdClosePost(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processApiLocksByLockIdClosePost(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * Notifies system about Lock opening.
+     * @param lockId The ID of the desired Lock
      * @return Success
      */
     apiLocksByLockIdOpenedPost(lockId: number): Observable<void> {
@@ -356,6 +471,8 @@ export class SmartLockApiService {
     }
 
     /**
+     * Notifies system about Lock closing.
+     * @param lockId The ID of the desired Lock
      * @return Success
      */
     apiLocksByLockIdClosedPost(lockId: number): Observable<void> {
@@ -406,6 +523,8 @@ export class SmartLockApiService {
     }
 
     /**
+     * Notifies system about Lock opening fail.
+     * @param lockId The ID of the desired Lock
      * @return Success
      */
     apiLocksByLockIdFailedPost(lockId: number): Observable<void> {
@@ -456,7 +575,8 @@ export class SmartLockApiService {
     }
 
     /**
-     * @param shareRightsViewModel (optional) 
+     * Shares rights on the lock to another user.
+     * @param shareRightsViewModel (optional) View model of sharing query
      * @return Success
      */
     apiLocksShareRightsPost(shareRightsViewModel: ShareRightsViewModel | null | undefined): Observable<void> {
@@ -508,7 +628,9 @@ export class SmartLockApiService {
     }
 
     /**
-     * @param lockModel (optional) 
+     * Edits the Lock by its ID.
+     * @param lockId The ID of the desired Lock
+     * @param lockModel (optional) The model to be applied
      * @return Success
      */
     apiLocksByLockIdPut(lockId: number, lockModel: Lock | null | undefined): Observable<void> {
@@ -563,6 +685,8 @@ export class SmartLockApiService {
     }
 
     /**
+     * Deletes the Lock by its ID.
+     * @param lockId The ID of the desired Lock
      * @return Success
      */
     apiLocksByLockIdDelete(lockId: number): Observable<void> {
@@ -613,6 +737,9 @@ export class SmartLockApiService {
     }
 
     /**
+     * Cancels lock rent by lockId and userId.
+     * @param lockId The ID of the desired Lock
+     * @param userId The ID of the desired User
      * @return Success
      */
     apiLocksByLockIdCancelByUserIdDelete(lockId: number, userId: number): Observable<void> {
@@ -887,6 +1014,7 @@ export class Lock implements ILock {
     id?: number | undefined;
     password?: string | undefined;
     info?: string | undefined;
+    address?: string | undefined;
     locked?: boolean | undefined;
     lockOperations?: LockOperation[] | undefined;
     lockRents?: LockRent[] | undefined;
@@ -905,6 +1033,7 @@ export class Lock implements ILock {
             this.id = data["id"];
             this.password = data["password"];
             this.info = data["info"];
+            this.address = data["address"];
             this.locked = data["locked"];
             if (data["lockOperations"] && data["lockOperations"].constructor === Array) {
                 this.lockOperations = [];
@@ -931,6 +1060,7 @@ export class Lock implements ILock {
         data["id"] = this.id;
         data["password"] = this.password;
         data["info"] = this.info;
+        data["address"] = this.address;
         data["locked"] = this.locked;
         if (this.lockOperations && this.lockOperations.constructor === Array) {
             data["lockOperations"] = [];
@@ -950,6 +1080,7 @@ export interface ILock {
     id?: number | undefined;
     password?: string | undefined;
     info?: string | undefined;
+    address?: string | undefined;
     locked?: boolean | undefined;
     lockOperations?: LockOperation[] | undefined;
     lockRents?: LockRent[] | undefined;
@@ -1143,7 +1274,7 @@ export class ShareRightsViewModel implements IShareRightsViewModel {
     adminId?: number | undefined;
     ownerId?: number | undefined;
     lockId?: number | undefined;
-    rights?: LockRentRights | undefined;
+    rights?: ShareRightsViewModelRights | undefined;
     from?: Date | undefined;
     to?: Date | undefined;
 
@@ -1190,7 +1321,7 @@ export interface IShareRightsViewModel {
     adminId?: number | undefined;
     ownerId?: number | undefined;
     lockId?: number | undefined;
-    rights?: LockRentRights | undefined;
+    rights?: ShareRightsViewModelRights | undefined;
     from?: Date | undefined;
     to?: Date | undefined;
 }
@@ -1287,6 +1418,13 @@ export interface IRegisterViewModel {
     password?: string | undefined;
 }
 
+/** Rights on the rented lock */
+export enum Rights {
+    _1 = 1, 
+    _2 = 2, 
+    _3 = 3, 
+}
+
 export enum LockOperationState {
     _1 = 1, 
     _2 = 2, 
@@ -1302,6 +1440,12 @@ export enum LockRentRights {
 export enum UserRole {
     _1 = 1, 
     _2 = 2, 
+}
+
+export enum ShareRightsViewModelRights {
+    _1 = 1, 
+    _2 = 2, 
+    _3 = 3, 
 }
 
 export class SwaggerException extends Error {

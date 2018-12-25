@@ -65,6 +65,7 @@
 
 .locked {
     background-color: rgb(4, 218, 4);
+    cursor: pointer;
 }
 
 .opened {
