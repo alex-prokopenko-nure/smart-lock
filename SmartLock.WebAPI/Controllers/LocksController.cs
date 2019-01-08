@@ -112,6 +112,8 @@ namespace SmartLock.WebAPI.Controllers
         public async Task<IActionResult> Open(int lockId)
         {
             await _locksService.OpenLock(lockId);
+            await _locksService.LockOpened(lockId);
+            await _hubContext.Clients.All.SetLockState(lockId, false);
             return Ok();
         }
 
@@ -124,6 +126,8 @@ namespace SmartLock.WebAPI.Controllers
         public async Task<IActionResult> Close(int lockId)
         {
             await _locksService.CloseLock(lockId);
+            await _locksService.LockClosed(lockId);
+            await _hubContext.Clients.All.SetLockState(lockId, true);
             return Ok();
         }
 

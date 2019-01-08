@@ -213,26 +213,16 @@ namespace SmartLock.WebAPI.Services
         {
             var currentLock = await GetLock(id);
             var client = new RestClient(currentLock.Address);
-            var request = new RestRequest($"api/iot/{id}/open", Method.POST);
+            var request = new RestRequest($"open", Method.GET);
             IRestResponse response = client.Execute(request);
-            if (response.IsSuccessful)
-            {
-                return;
-            }
-            throw new Exception();
         }
 
         public async Task CloseLock(int id)
         {
             var currentLock = await GetLock(id);
             var client = new RestClient(currentLock.Address);
-            var request = new RestRequest($"api/iot/{id}/close", Method.POST);
+            var request = new RestRequest($"close", Method.GET);
             IRestResponse response = client.Execute(request);
-            if (response.IsSuccessful)
-            {
-                return;
-            }
-            throw new Exception();
         }
     }
 }
