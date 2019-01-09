@@ -12,6 +12,8 @@
     </ContentPage.Resources>
 
     <StackLayout>
+        <Button Text="{Binding State}" Clicked="ChangeLockState">
+        </Button>
         <ListView x:Name="ItemsListView"
                 ItemsSource="{Binding Operations}"
                 VerticalOptions="FillAndExpand"

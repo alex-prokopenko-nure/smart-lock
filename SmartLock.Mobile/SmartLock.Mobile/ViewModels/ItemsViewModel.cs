@@ -35,7 +35,7 @@ namespace SmartLock.Mobile.ViewModels
             try
             {
                 Items.Clear();
-                var client = new RestClient("http://c6838756.ngrok.io");
+                var client = new RestClient("http://2d02c1bd.ngrok.io");
                 var request = new RestRequest($"/api/Locks/all-locks/{userId}", Method.GET);
                 request.AddHeader("Authorization", $"Bearer {Application.Current.Properties["jwt_token"].ToString()}");
                 IRestResponse response = client.Execute(request);

@@ -13,11 +13,15 @@ namespace SmartLock.Mobile.ViewModels
     public class ItemDetailViewModel : BaseViewModel
     {
         public ObservableCollection<LockOperation> Operations { get; set; }
+        public String State { get; set; }
+        public Lock Item { get; set; }
         public Command LoadItemsCommand { get; set; }
 
         public ItemDetailViewModel(Lock item)
         {
+            Item = item;
             Title = $"Lock #{item.Id} operations";
+            State = item.Locked ? "Open" : "Close";
             Operations = new ObservableCollection<LockOperation>();
             var userId = (int)Application.Current.Properties["user_id"];
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand(item, userId));
@@ -34,7 +38,7 @@ namespace SmartLock.Mobile.ViewModels
             try
             {
                 Operations.Clear();
-                var client = new RestClient("http://c6838756.ngrok.io");
+                var client = new RestClient("http://2d02c1bd.ngrok.io");
                 var request = new RestRequest($"/api/Locks/{item.Id}/operations?userId={userId}", Method.GET);
                 request.AddHeader("Authorization", $"Bearer {Application.Current.Properties["jwt_token"].ToString()}");
                 IRestResponse response = client.Execute(request);

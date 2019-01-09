@@ -57,7 +57,7 @@ namespace SmartLock.Mobile.Views
             };
 
             login.Clicked += async (sender, e) => {
-                var client = new RestClient("http://c6838756.ngrok.io");
+                var client = new RestClient("http://2d02c1bd.ngrok.io");
                 var request = new RestRequest("api/Users/login", Method.POST);
                 request.AddJsonBody(new
                 {
